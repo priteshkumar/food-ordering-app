@@ -137,7 +137,7 @@ class Header extends Component {
                   <SearchIcon fontSize="medium" style={{ color: "white" }} />
                 </InputAdornment>
               }
-              placeholder="Search Restaurant By Name"
+              placeholder="Search by Restaurant Name"
             />
           </ThemeProvider>
         </div>
