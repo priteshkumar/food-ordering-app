@@ -1,0 +1,18 @@
+.appbar{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items:center;
+    width:100%;
+    padding:0px;
+    background-color: #212121;
+    justify-content: space-evenly;
+}
+
+.searchbar{
+    width:250px;
+}
+
+.searchbar:focus{
+    border-bottom: 2px solid white;
+}
