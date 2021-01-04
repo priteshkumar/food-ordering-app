@@ -219,16 +219,53 @@ class Header extends Component {
     this.state.fname === ""
       ? this.setState({ firstnameRequired: "dispBlock" })
       : this.setState({ firstnameRequired: "dispNone" });
-    this.state.email === ""
+
+    this.state.email === "" || !this.validateEmail(this.state.email)
       ? this.setState({ emailRequired: "dispBlock" })
       : this.setState({ emailRequired: "dispNone" });
-    this.state.userPassword === ""
+
+    /*if (this.state.email.length > 0) {
+      if (!this.validateEmail(this.state.email)) {
+        this.setState({ invalidEmail: "dispBlock" });
+      }
+    }*/
+
+    this.state.userPassword === "" ||
+    !this.validatePassword(this.state.userPassword)
       ? this.setState({ userpassRequired: "dispBlock" })
       : this.setState({ userpassRequired: "dispNone" });
 
-    this.state.contactNo === ""
+    this.state.contactNo === "" ||
+    !this.validateContactNumber(this.state.contactNo)
       ? this.setState({ contactnumRequired: "dispBlock" })
       : this.setState({ contactnumRequired: "dispNone" });
+  };
+
+  validateEmail = (email) => {
+    console.log(email);
+    let emailRegex = /.+@.+\..+/;
+    return emailRegex.test(email);
+  };
+
+  /*
+  at least a capital letter, a small letter, a number and a special character
+  Password must contain at least one capital letter, one small letter, one number, and one special character
+  */
+  validatePassword = (password) => {
+    console.log(password);
+    // let passwordRegex = /.+/;
+    return (
+      /[A-Z]+/.test(password) &&
+      /[a-z]+/.test(password) &&
+      /[0-9]+/.test(password) &&
+      /[!@#$%^&*]+/.test(password)
+    );
+  };
+
+  validateContactNumber = (contactNum) => {
+    console.log(contactNum);
+    let phoneRegex = /^[0-9]{10}$/;
+    return phoneRegex.test(contactNum);
   };
 
   userNameChangeHandler = (e) => {
@@ -260,6 +297,12 @@ class Header extends Component {
   };
 
   render() {
+
+    let invalidPasswordMsg =
+      "Password must contain at least one capital letter, one small letter, one number, and one special character";
+    let invalidContactNumMsg =
+      "Contact No. must contain only numbers and must be 10 digits long";
+
     return (
       <div className="appbar">
         <IconButton
@@ -390,14 +433,16 @@ class Header extends Component {
               <FormControl className="form-control" required>
                 <InputLabel htmlFor="email">Email</InputLabel>
                 <Input
-                  type="text"
+                  type="email"
                   id="email"
                   email={this.state.email}
                   aria-describedby="enter email id"
                   onChange={this.emailChangeHandler}
                 />
                 <FormHelperText className={this.state.emailRequired}>
-                  <span className="red">required</span>
+                  <span className="red">
+                    {this.state.email === "" ? "required" : "Invalid Email"}
+                  </span>
                 </FormHelperText>
               </FormControl>
               <br />
@@ -412,7 +457,11 @@ class Header extends Component {
                   onChange={this.userpassChangeHandler}
                 />
                 <FormHelperText className={this.state.userpassRequired}>
-                  <span className="red">required</span>
+                  <span className="red">
+                    {this.state.userPassword === ""
+                      ? "required"
+                      : invalidPasswordMsg}
+                  </span>
                 </FormHelperText>
               </FormControl>
               <br />
@@ -427,7 +476,7 @@ class Header extends Component {
                   onChange={this.contactnumChangeHandler}
                 />
                 <FormHelperText className={this.state.contactnumRequired}>
-                  <span className="red">required</span>
+                  <span className="red">{this.state.contactNo === ""?"required":invalidContactNumMsg}</span>
                 </FormHelperText>
               </FormControl>
               <br />
