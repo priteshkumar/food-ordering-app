@@ -4,9 +4,8 @@
   flex-wrap: wrap;
   align-items: center;
   width: 100%;
-  padding: 0px;
-  background-color:#37474f;
-  justify-content: space-evenly;
+  background-color: #37474f;
+  justify-content: space-between;
 }
 
 .searchbar-div {
@@ -16,4 +15,49 @@
 
 .searchbar {
   width: 250px;
+}
+
+.login-btn {
+  margin-right: 10px;
+}
+.tabs {
+  margin-bottom: 20px;
+}
+
+.dispNone {
+  display: none;
+}
+
+.dispBlock {
+  display: block;
+}
+
+.red {
+  color: red;
+}
+
+@media (max-width: 768px) {
+  .appbar {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  .searchbar-div {
+    padding-top: 3px;
+    margin-left: 12px;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 5px;
+  }
+  .searchbar {
+    width: 70%;
+  }
+  input {
+    font-size: 1.2rem;
+  }
+  .loginbtn-div {
+    margin-left: 12px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+  }
 }
