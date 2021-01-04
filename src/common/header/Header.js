@@ -125,7 +125,7 @@ class Header extends Component {
         >
           <FastfoodIcon style={{ color: "white" }} fontSize="large" />
         </IconButton>
-        <div>
+        <div className="searchbar-div">
           <ThemeProvider theme={darkTheme}>
             <Input
               type="text"

@@ -1,18 +1,19 @@
-.appbar{
-    display:flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items:center;
-    width:100%;
-    padding:0px;
-    background-color: #212121;
-    justify-content: space-evenly;
+.appbar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  padding: 0px;
+  background-color:#37474f;
+  justify-content: space-evenly;
 }
 
-.searchbar{
-    width:250px;
+.searchbar-div {
+  padding: 8px 5px 9px 5px;
+  text-align: center;
 }
 
-.searchbar:focus{
-    border-bottom: 2px solid white;
+.searchbar {
+  width: 250px;
 }
