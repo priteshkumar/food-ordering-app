@@ -297,7 +297,6 @@ class Header extends Component {
   };
 
   render() {
-
     let invalidPasswordMsg =
       "Password must contain at least one capital letter, one small letter, one number, and one special character";
     let invalidContactNumMsg =
@@ -450,7 +449,7 @@ class Header extends Component {
               <FormControl className="form-control" required>
                 <InputLabel htmlFor="user-password">Password</InputLabel>
                 <Input
-                  type="text"
+                  type="password"
                   id="user-password"
                   user-password={this.state.userPassword}
                   aria-describedby="enter password"
@@ -476,7 +475,11 @@ class Header extends Component {
                   onChange={this.contactnumChangeHandler}
                 />
                 <FormHelperText className={this.state.contactnumRequired}>
-                  <span className="red">{this.state.contactNo === ""?"required":invalidContactNumMsg}</span>
+                  <span className="red">
+                    {this.state.contactNo === ""
+                      ? "required"
+                      : invalidContactNumMsg}
+                  </span>
                 </FormHelperText>
               </FormControl>
               <br />
