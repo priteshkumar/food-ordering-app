@@ -315,7 +315,7 @@ class Header extends Component {
           </Tabs>
           {this.state.value === 0 && (
             <TabContainer>
-              <FormControl required>
+              <FormControl className="form-control" required>
                 <InputLabel htmlFor="username">Contact No.</InputLabel>
                 <Input
                   type="text"
@@ -332,7 +332,7 @@ class Header extends Component {
               </FormControl>
               <br />
               <br />
-              <FormControl required>
+              <FormControl className="form-control" required>
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input
                   type="password"
@@ -358,7 +358,7 @@ class Header extends Component {
           )}
           {this.state.value === 1 && (
             <TabContainer>
-              <FormControl required>
+              <FormControl className="form-control" required>
                 <InputLabel htmlFor="fname">First Name</InputLabel>
                 <Input
                   type="text"
@@ -375,7 +375,7 @@ class Header extends Component {
               </FormControl>
               <br />
               <br />
-              <FormControl>
+              <FormControl className="form-control">
                 <InputLabel htmlFor="lname">Last Name</InputLabel>
                 <Input
                   type="text"
@@ -387,7 +387,7 @@ class Header extends Component {
               </FormControl>
               <br />
               <br />
-              <FormControl required>
+              <FormControl className="form-control" required>
                 <InputLabel htmlFor="email">Email</InputLabel>
                 <Input
                   type="text"
@@ -402,7 +402,7 @@ class Header extends Component {
               </FormControl>
               <br />
               <br />
-              <FormControl required>
+              <FormControl className="form-control" required>
                 <InputLabel htmlFor="user-password">Password</InputLabel>
                 <Input
                   type="text"
@@ -417,7 +417,7 @@ class Header extends Component {
               </FormControl>
               <br />
               <br />
-              <FormControl required>
+              <FormControl className="form-control" required>
                 <InputLabel htmlFor="contactno">Contact No.</InputLabel>
                 <Input
                   type="text"
