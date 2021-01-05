@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Header from './common/header/Header';
+//import Header from './common/header/Header';
+import Home from './screens/home/Home';
+
 import 'typeface-roboto';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
     <div>
-        <Header />
-        Food Ordering App
+        <Home />
     </div>,
     document.getElementById('root')
 );
