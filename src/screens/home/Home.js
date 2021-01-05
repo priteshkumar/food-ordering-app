@@ -66,14 +66,21 @@ class Home extends Component {
                   title={restaurant.restaurant_name}
                 />
                 <CardContent>
-                  <Typography
+                    <Typography variant="h5">{restaurant.restaurant_name}</Typography><br/><br/>
+                  <Typography 
                     variant="body2"
-                    color="textSecondary"
+                    color="textPrimary"
                     component="p"
+                    style={{fontSize:"17px"}}
                   >
-                    {restaurant.categories.join(", ")}
+                    {restaurant.categories
+                      .map((category) => {
+                        return category.category_name;
+                      })
+                      .join(", ")}
                   </Typography>
                 </CardContent>
+                <br/>
               </CardActionArea>
               <CardActions>
                 <div className="cardaction-div">
@@ -88,6 +95,7 @@ class Home extends Component {
                       padding: "5px",
                       paddingLeft: "2px",
                       paddingRight: "2px",
+                      marginLeft:"7px"
                     }}
                   >
                     <Icon
@@ -99,12 +107,12 @@ class Home extends Component {
                       restaurant.number_of_customers_rated +
                       ")"}
                   </span>
-                    <Icon
-                      className="fa fa-inr"
-                      style={{ fontSize: 15, width: "100px" }}
-                    >
-                      {restaurant.average_price_for_two + " for two"}
-                    </Icon>
+                  <Icon
+                    className="fa fa-inr"
+                    style={{ fontSize: 15, width: "100px" }}
+                  >
+                    {restaurant.average_price_for_two + " for two"}
+                  </Icon>
                 </div>
               </CardActions>
             </Card>
