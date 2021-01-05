@@ -9,10 +9,10 @@ import restaurantData from "../../common/restaurantData";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 //import FormControl from "@material-ui/core/FormControl";
-import { Typography } from "@material-ui/core";
+import { GridList, GridListTile, Typography } from "@material-ui/core";
 //import ListItemText from "@material-ui/core/ListItemText";
 //import TextField from "@material-ui/core/TextField";
-import CardActionArea from "@material-ui/core/CardActionArea";
+//import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardMedia from "@material-ui/core/CardMedia";
 //import Button from "@material-ui/core/Button";
@@ -51,72 +51,93 @@ class Home extends Component {
   render() {
     // eslint-disable-next-line no-unused-vars
     const { classes } = this.props;
+    console.log(restaurantData);
     return (
       <div>
         <Header />
         <div className="flex-container">
-          {restaurantData.map((restaurant) => (
-            <Card style={{ margin: "10px" }}>
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  alt={restaurant.restaurant_name}
-                  height="140"
-                  image={restaurant.photo_url}
-                  title={restaurant.restaurant_name}
-                />
-                <CardContent>
-                    <Typography variant="h5">{restaurant.restaurant_name}</Typography><br/><br/>
-                  <Typography 
-                    variant="body2"
-                    color="textPrimary"
-                    component="p"
-                    style={{fontSize:"17px"}}
-                  >
-                    {restaurant.categories
-                      .map((category) => {
-                        return category.category_name;
-                      })
-                      .join(", ")}
-                  </Typography>
-                </CardContent>
-                <br/>
-              </CardActionArea>
-              <CardActions>
-                <div className="cardaction-div">
-                  <span
-                    style={{
-                      backgroundColor: "#ffd600",
-                      color: "white",
-                      width: "100px",
-                      fontWeight: "530",
-                      textAlign: "center",
-                      fontSize: 12,
-                      padding: "5px",
-                      paddingLeft: "2px",
-                      paddingRight: "2px",
-                      marginLeft:"7px"
-                    }}
-                  >
-                    <Icon
-                      className="fa fa-star"
-                      style={{ color: "white", fontSize: 12 }}
-                    />{" "}
-                    {restaurant.customer_rating +
-                      "(" +
-                      restaurant.number_of_customers_rated +
-                      ")"}
-                  </span>
-                  <Icon
-                    className="fa fa-inr"
-                    style={{ fontSize: 15, width: "100px" }}
-                  >
-                    {restaurant.average_price_for_two + " for two"}
-                  </Icon>
-                </div>
-              </CardActions>
-            </Card>
-          ))}
+          <GridList
+            className="restaurant-list-main"
+            cellHeight="auto"
+            cols={4}
+            style={{ justifyContent: "flex-start", flexWrap: "wrap" }}
+          >
+            {restaurantData.map((restaurant) => (
+              <GridListTile style={{ width: "25%", marginBottom: "0px" }}>
+                <Card
+                  variant="outlined"
+                  style={{
+                    margin: "9px",
+                    marginBottom: "0px",
+                    marginTop: "0px",
+                    flex: "1",
+                    paddingBottom: "4.7%",
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    alt={restaurant.restaurant_name}
+                    height="260"
+                    image={restaurant.photo_url}
+                    title={restaurant.restaurant_name}
+                  />
+                  <CardContent>
+                    <Typography variant="h5">
+                      {restaurant.restaurant_name}
+                    </Typography>
+                    <br />
+                    <br />
+                    <Typography
+                      variant="body2"
+                      color="textPrimary"
+                      component="p"
+                      style={{ fontSize: "17px" }}
+                    >
+                      {restaurant.categories
+                        .map((category) => {
+                          return category.category_name;
+                        })
+                        .join(", ")}
+                    </Typography>
+                  </CardContent>
+                  <br />
+                  <CardActions>
+                    <div className="cardaction-div">
+                      <span
+                        style={{
+                          backgroundColor: "#ffd600",
+                          color: "white",
+                          width: "100px",
+                          fontWeight: "530",
+                          textAlign: "center",
+                          fontSize: 12,
+                          padding: "5px",
+                          paddingLeft: "2px",
+                          paddingRight: "2px",
+                          marginLeft: "7px",
+                        }}
+                      >
+                        <Icon
+                          className="fa fa-star"
+                          style={{ color: "white", fontSize: 12 }}
+                        />{" "}
+                        {restaurant.customer_rating +
+                          "(" +
+                          restaurant.number_of_customers_rated +
+                          ")"}
+                      </span>
+                      <Icon
+                        className="fa fa-inr"
+                        style={{ fontSize: 15, width: "100px" }}
+                      >
+                        {restaurant.average_price_for_two + " for two"}
+                      </Icon>
+                    </div>
+                  </CardActions>
+                </Card>
+              </GridListTile>
+            ))}
+          </GridList>
         </div>
       </div>
     );

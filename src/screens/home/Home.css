@@ -1,9 +1,15 @@
 .flex-container {
   display: flex;
   flex-wrap: wrap;
-  width:80%;
+  width:100%;
   justify-content: center;
-  align-items: flex-start;
+  align-items: stretch;
+  margin:0 auto;
+  padding-top:20px;
+  height:100vh;
+}
+.restaurant-list-main{
+    width:100%;
 }
 
 .restaurant-image {
