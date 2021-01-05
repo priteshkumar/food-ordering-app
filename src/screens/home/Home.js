@@ -82,16 +82,20 @@ class Home extends Component {
                     title={restaurant.restaurant_name}
                   />
                   <CardContent>
-                    <Typography variant="h5">
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      style={{ marginBottom: "20px" }}
+                    >
                       {restaurant.restaurant_name}
                     </Typography>
-                    <br />
-                    <br />
+
                     <Typography
-                      variant="body2"
+                      gutterBottom
+                      variant="body1"
                       color="textPrimary"
                       component="p"
-                      style={{ fontSize: "17px" }}
+                      style={{ width:"80%",textAlign:"left",fontSize: "22px", paddingTop: "20px",marginBottom:"24px" }}
                     >
                       {restaurant.categories
                         .map((category) => {
@@ -100,7 +104,6 @@ class Home extends Component {
                         .join(", ")}
                     </Typography>
                   </CardContent>
-                  <br />
                   <CardActions>
                     <div className="cardaction-div">
                       <span

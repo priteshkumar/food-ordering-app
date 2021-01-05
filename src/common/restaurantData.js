@@ -113,6 +113,11 @@ let restaurantData = [
         id: 6,
         category_name: "drinks",
       },
+      {
+          id:7,
+          category_name:"pan asian"
+
+      }
     ],
   },
   {
