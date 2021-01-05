@@ -1,30 +1,23 @@
 .flex-container {
   display: flex;
   flex-wrap: wrap;
-  width:100%;
+  width: 100%;
   justify-content: center;
   align-items: stretch;
-  margin:0 auto;
-  padding-top:20px;
-  height:100vh;
+  margin: 0 auto;
+  padding-top: 20px;
+  height: 100vh;
 }
-.restaurant-list-main{
-    width:100%;
+.restaurant-list-main {
+  width: 100%;
 }
-
-.restaurant-image {
-  height: 100%;
-  width: auto;
-}
-
-.released-movie-grid-item {
-  margin: 15px;
-}
-.cardaction-div{
-    width:100%;
-    display:flex;
-    justify-content: space-between;
-    align-items: baseline;
+.cardaction-div {
+  width: 100%;
+  display: flex;
+  margin-top:0px;
+  padding-top:0px;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
 @media (max-width: 992px) {

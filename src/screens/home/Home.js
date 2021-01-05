@@ -71,7 +71,8 @@ class Home extends Component {
                     marginBottom: "0px",
                     marginTop: "0px",
                     flex: "1",
-                    paddingBottom: "4.7%",
+                    height:"auto",
+                    paddingBottom: "2%",
                   }}
                 >
                   <CardMedia
@@ -91,11 +92,15 @@ class Home extends Component {
                     </Typography>
 
                     <Typography
-                      gutterBottom
                       variant="body1"
                       color="textPrimary"
                       component="p"
-                      style={{ width:"80%",textAlign:"left",fontSize: "22px", paddingTop: "20px",marginBottom:"24px" }}
+                      style={{
+                        width: "80%",
+                        textAlign: "left",
+                        fontSize: "22px",
+                        paddingTop: "20px",
+                      }}
                     >
                       {restaurant.categories
                         .map((category) => {
@@ -104,7 +109,7 @@ class Home extends Component {
                         .join(", ")}
                     </Typography>
                   </CardContent>
-                  <CardActions>
+                  <CardActions style={{marginTop:"0px",paddingTop:"5px"}}>
                     <div className="cardaction-div">
                       <span
                         style={{
@@ -114,7 +119,7 @@ class Home extends Component {
                           fontWeight: "530",
                           textAlign: "center",
                           fontSize: 12,
-                          padding: "5px",
+                          padding: "10px",
                           paddingLeft: "2px",
                           paddingRight: "2px",
                           marginLeft: "7px",
@@ -131,7 +136,7 @@ class Home extends Component {
                       </span>
                       <Icon
                         className="fa fa-inr"
-                        style={{ fontSize: 15, width: "100px" }}
+                        style={{ fontSize: 20, width: "130px" }}
                       >
                         {restaurant.average_price_for_two + " for two"}
                       </Icon>
