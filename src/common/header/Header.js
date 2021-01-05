@@ -185,23 +185,7 @@ class Header extends Component {
   };
 
   onTabchangeHandler = (event, value) => {
-    this.setState({
-      value: value,
-      username: "",
-      usernameRequired: "dispNone",
-      password: "",
-      passwordRequired: "dispNone",
-      fname: "",
-      firstnameRequired: "dispNone",
-      lname: "",
-      lastnameRequired: "dispNone",
-      email: "",
-      emailRequired: "dispNone",
-      userPassword: "",
-      userpassRequired: "dispNone",
-      contactNo: "",
-      contactnumRequired: "dispNone",
-    });
+    this.setState({value: value});
   };
 
   btnClickhandler = (event) => {
@@ -363,6 +347,7 @@ class Header extends Component {
                   type="text"
                   id="username"
                   username={this.state.username}
+                  value={this.state.username}
                   aria-describedby="enter username"
                   onChange={this.userNameChangeHandler}
                 />
@@ -380,6 +365,7 @@ class Header extends Component {
                   type="password"
                   id="password"
                   password={this.state.password}
+                  value={this.state.password}
                   aria-describedby="enter password"
                   onChange={this.passwordChangeHandler}
                 />
@@ -406,6 +392,7 @@ class Header extends Component {
                   type="text"
                   id="fname"
                   fname={this.state.fname}
+                  value={this.state.fname}
                   aria-describedby="enter first name"
                   onChange={this.firstNameChangeHandler}
                 />
@@ -423,6 +410,7 @@ class Header extends Component {
                   type="text"
                   id="lname"
                   lname={this.state.lname}
+                  value={this.state.lname}
                   aria-describedby="enter last name"
                   onChange={this.lastNameChangeHandler}
                 />
@@ -435,6 +423,7 @@ class Header extends Component {
                   type="email"
                   id="email"
                   email={this.state.email}
+                  value={this.state.email}
                   aria-describedby="enter email id"
                   onChange={this.emailChangeHandler}
                 />
@@ -452,6 +441,7 @@ class Header extends Component {
                   type="password"
                   id="user-password"
                   user-password={this.state.userPassword}
+                  value={this.state.userPassword}
                   aria-describedby="enter password"
                   onChange={this.userpassChangeHandler}
                 />
@@ -471,6 +461,7 @@ class Header extends Component {
                   type="text"
                   id="contactno"
                   contactno={this.state.contactNo}
+                  value={this.state.contactNo}
                   aria-describedby="enter contact number"
                   onChange={this.contactnumChangeHandler}
                 />
