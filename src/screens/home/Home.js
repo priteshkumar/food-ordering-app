@@ -91,7 +91,7 @@ class Home extends Component {
 
     return (
       <div>
-        <Header searchHandler={this.restaurantSearchChangeHandler} />
+        <Header baseUrl={this.baseUrl} searchHandler={this.restaurantSearchChangeHandler} />
         <div className="flex-container">
           <GridList
             className="restaurant-list-main"

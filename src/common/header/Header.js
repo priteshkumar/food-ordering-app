@@ -16,6 +16,7 @@ import PropTypes from "prop-types";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
+import Snackbar from "@material-ui/core/Snackbar";
 import "./Header.css";
 
 /*
@@ -156,6 +157,9 @@ class Header extends Component {
       userpassRequired: "dispNone",
       contactNo: "",
       contactnumRequired: "dispNone",
+      registrationSuccess: false,
+      invalidSignUp: false,
+      invalidLogin: false,
     };
   }
 
@@ -177,6 +181,8 @@ class Header extends Component {
       userpassRequired: "dispNone",
       contactNo: "",
       contactnumRequired: "dispNone",
+      invalidSignUp: false,
+      invalidLogin: false,
     });
   };
 
@@ -200,29 +206,49 @@ class Header extends Component {
 
   signupClickhandler = (event) => {
     console.log(this.state);
+    this.setState({ invalidSignUp: false });
+
     this.state.fname === ""
-      ? this.setState({ firstnameRequired: "dispBlock" })
+      ? this.setState({ firstnameRequired: "dispBlock", invalidSignUp: true })
       : this.setState({ firstnameRequired: "dispNone" });
 
     this.state.email === "" || !this.validateEmail(this.state.email)
-      ? this.setState({ emailRequired: "dispBlock" })
+      ? this.setState({ emailRequired: "dispBlock", invalidSignUp: true })
       : this.setState({ emailRequired: "dispNone" });
-
-    /*if (this.state.email.length > 0) {
-      if (!this.validateEmail(this.state.email)) {
-        this.setState({ invalidEmail: "dispBlock" });
-      }
-    }*/
 
     this.state.userPassword === "" ||
     !this.validatePassword(this.state.userPassword)
-      ? this.setState({ userpassRequired: "dispBlock" })
+      ? this.setState({ userpassRequired: "dispBlock", invalidSignUp: true })
       : this.setState({ userpassRequired: "dispNone" });
 
     this.state.contactNo === "" ||
     !this.validateContactNumber(this.state.contactNo)
-      ? this.setState({ contactnumRequired: "dispBlock" })
+      ? this.setState({ contactnumRequired: "dispBlock", invalidSignUp: true })
       : this.setState({ contactnumRequired: "dispNone" });
+
+    if (this.state.invalidSignUp === true) return;
+
+    let that = this;
+    let dataSignUp = JSON.stringify({
+      email_address: this.state.email,
+      first_name: this.state.fname,
+      last_name: this.state.lname,
+      contact_number: this.state.contactNo,
+      password: this.state.userPassword,
+    });
+
+    let xhrSignup = new XMLHttpRequest();
+    xhrSignup.addEventListener("readystatechange", function() {
+      if (this.readyState === 4) {
+        console.log(this.responseText);
+        that.setState({ value: 0, registrationSuccess: true });
+      }
+    });
+
+    xhrSignup.open("POST", this.props.baseUrl + "/signup");
+    xhrSignup.setRequestHeader("Content-Type", "application/json");
+    xhrSignup.setRequestHeader("Cache-Control", "no-cache");
+    xhrSignup.send(dataSignUp);
   };
 
   validateEmail = (email) => {
@@ -283,6 +309,10 @@ class Header extends Component {
   searchInputChangeHandler = (e) => {
     console.log("searchtext ===" + e.target.value);
     this.props.searchHandler(e.target.value);
+  };
+
+  handlesnackBarClose = (e) => {
+    this.setState({registrationSuccess:false});
   }
 
   render() {
@@ -290,6 +320,8 @@ class Header extends Component {
       "Password must contain at least one capital letter, one small letter, one number, and one special character";
     let invalidContactNumMsg =
       "Contact No. must contain only numbers and must be 10 digits long";
+    let vertical = "bottom";
+    let horizontal = "left";
 
     return (
       <div className="appbar">
@@ -491,6 +523,14 @@ class Header extends Component {
             </TabContainer>
           )}
         </Modal>
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={this.state.registrationSuccess}
+          onClose={this.handlesnackBarClose}
+          autoHideDuration={3000}
+          message="Registered successfully! Please login now!"
+          key={vertical + horizontal}
+        />
       </div>
     );
   }
