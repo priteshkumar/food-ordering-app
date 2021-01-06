@@ -9,11 +9,11 @@ import restaurantData from "../../common/restaurantData";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 //import FormControl from "@material-ui/core/FormControl";
-import { GridList, GridListTile, Typography } from "@material-ui/core";
+import { GridList, Typography } from "@material-ui/core";
 //import ListItemText from "@material-ui/core/ListItemText";
 //import TextField from "@material-ui/core/TextField";
 //import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
+//import CardActions from "@material-ui/core/CardActions";
 import CardMedia from "@material-ui/core/CardMedia";
 //import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
@@ -63,16 +63,17 @@ class Home extends Component {
             style={{ justifyContent: "flex-start", flexWrap: "wrap" }}
           >
             {restaurantData.map((restaurant) => (
-              <GridListTile style={{ width: "25%", marginBottom: "0px" }}>
+             /* <GridListTile style={{ width: "25%", marginBottom: "0px" }}>*/
                 <Card
                   variant="outlined"
                   style={{
                     margin: "9px",
-                    marginBottom: "0px",
+                    marginBottom: "9px",
                     marginTop: "0px",
-                    flex: "1",
                     height:"auto",
-                    paddingBottom: "2%",
+                    width:"23.5%",
+                    paddingBottom: "1%",
+                    position:"relative"
                   }}
                 >
                   <CardMedia
@@ -86,12 +87,12 @@ class Home extends Component {
                     <Typography
                       variant="h5"
                       gutterBottom
-                      style={{ marginBottom: "20px" }}
+                      style={{ marginBottom: "12px" }}
                     >
                       {restaurant.restaurant_name}
                     </Typography>
 
-                    <Typography
+                    <Typography gutterBottom
                       variant="body1"
                       color="textPrimary"
                       component="p"
@@ -100,6 +101,7 @@ class Home extends Component {
                         textAlign: "left",
                         fontSize: "22px",
                         paddingTop: "20px",
+                        paddingBottom:"30px"
                       }}
                     >
                       {restaurant.categories
@@ -109,6 +111,38 @@ class Home extends Component {
                         .join(", ")}
                     </Typography>
                   </CardContent>
+                  <div className="cardaction-div">
+                      <span
+                        style={{
+                          backgroundColor: "#ffd600",
+                          color: "white",
+                          width: "100px",
+                          fontWeight: "530",
+                          textAlign: "center",
+                          fontSize: 12,
+                          padding: "10px",
+                          paddingLeft: "2px",
+                          paddingRight: "2px",
+                          marginLeft: "10px",
+                        }}
+                      >
+                        <Icon
+                          className="fa fa-star"
+                          style={{ color: "white", fontSize: 12 }}
+                        />{" "}
+                        {restaurant.customer_rating +
+                          "(" +
+                          restaurant.number_of_customers_rated +
+                          ")"}
+                      </span>
+                      <Icon
+                        className="fa fa-inr"
+                        style={{ fontSize: 20, width: "130px" }}
+                      >
+                        {restaurant.average_price_for_two + " for two"}
+                      </Icon>
+                    </div>
+                 { /*
                   <CardActions style={{marginTop:"0px",paddingTop:"5px"}}>
                     <div className="cardaction-div">
                       <span
@@ -142,8 +176,8 @@ class Home extends Component {
                       </Icon>
                     </div>
                   </CardActions>
+                        */}
                 </Card>
-              </GridListTile>
             ))}
           </GridList>
         </div>

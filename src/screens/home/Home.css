@@ -10,14 +10,19 @@
 }
 .restaurant-list-main {
   width: 100%;
+  display: flex;
 }
 .cardaction-div {
   width: 100%;
   display: flex;
-  margin-top:0px;
-  padding-top:0px;
+  margin-top: 0px;
+  padding-top: 0px;
   justify-content: space-between;
   align-items: baseline;
+  position:absolute;
+  padding:5px;
+  padding-bottom: 20px;
+  bottom:5px;
 }
 
 @media (max-width: 992px) {
