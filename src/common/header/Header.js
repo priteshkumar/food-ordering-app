@@ -185,7 +185,7 @@ class Header extends Component {
   };
 
   onTabchangeHandler = (event, value) => {
-    this.setState({value: value});
+    this.setState({ value: value });
   };
 
   btnClickhandler = (event) => {
@@ -280,6 +280,11 @@ class Header extends Component {
     this.setState({ contactNo: e.target.value });
   };
 
+  searchInputChangeHandler = (e) => {
+    console.log("searchtext ===" + e.target.value);
+    this.props.searchHandler(e.target.value);
+  }
+
   render() {
     let invalidPasswordMsg =
       "Password must contain at least one capital letter, one small letter, one number, and one special character";
@@ -309,6 +314,7 @@ class Header extends Component {
                 </InputAdornment>
               }
               placeholder="Search by Restaurant Name"
+              onChange={this.searchInputChangeHandler}
             />
           </ThemeProvider>
         </div>

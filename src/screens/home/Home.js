@@ -57,48 +57,29 @@ class Home extends Component {
     xhrUpcoming.send(dataUpcoming);
   }
 
-  restaurantSearchChangeHandler = (event) => {
-    this.setState({ restaurantSearch: event.target.value });
+  restaurantSearchChangeHandler = (restaurantSearch) => {
+    console.log(restaurantSearch);
+    let that = this;
+    let xhrFilter = new XMLHttpRequest();
+    xhrFilter.addEventListener("readystatechange", function() {
+      if (xhrFilter.readyState === 4 && xhrFilter.status === 200) {
+        console.log(xhrFilter.responseText);
+        let result = JSON.parse(xhrFilter.responseText);
+        console.log(result.restaurants);
+        that.setState({
+          restaurants: result.restaurants,
+        });
+      }
+    });
+
+    xhrFilter.open("GET", this.baseUrl + "/name/" + restaurantSearch);
+    xhrFilter.setRequestHeader("Cache-Control", "no-cache");
+    xhrFilter.send();
   };
 
   /*
   movieClickHandler = (movieId) => {
     this.props.history.push("/movie/" + movieId);
-  };
-
-  filterApplyHandler = () => {
-    let queryString = "?status=RELEASED";
-    if (this.state.movieName !== "") {
-      queryString += "&title=" + this.state.movieName;
-    }
-    if (this.state.genres.length > 0) {
-      queryString += "&genres=" + this.state.genres.toString();
-    }
-    if (this.state.artists.length > 0) {
-      queryString += "&artist_name=" + this.state.artists.toString();
-    }
-    if (this.state.releaseDateStart !== "") {
-      queryString += "&start_date=" + this.state.releaseDateStart;
-    }
-    if (this.state.releaseDateEnd !== "") {
-      queryString += "&end_date=" + this.state.releaseDateEnd;
-    }
-
-    let that = this;
-    let dataFilter = null;
-    let xhrFilter = new XMLHttpRequest();
-    xhrFilter.addEventListener("readystatechange", function() {
-      if (this.readyState === 4) {
-        that.setState({ releasedMovies: JSON.parse(this.responseText).movies });
-      }
-    });
-
-    xhrFilter.open(
-      "GET",
-      this.props.baseUrl + "movies" + encodeURI(queryString)
-    );
-    xhrFilter.setRequestHeader("Cache-Control", "no-cache");
-    xhrFilter.send(dataFilter);
   };*/
 
   render() {
@@ -110,7 +91,7 @@ class Home extends Component {
 
     return (
       <div>
-        <Header />
+        <Header searchHandler={this.restaurantSearchChangeHandler} />
         <div className="flex-container">
           <GridList
             className="restaurant-list-main"
@@ -118,6 +99,11 @@ class Home extends Component {
             cols={4}
             style={{ justifyContent: "flex-start", flexWrap: "wrap" }}
           >
+            {restaurantData.length === 0 ? (
+              <Typography style={{ marginLeft: "10px",fontSize:"1.3rem" }} variant="p">
+                No restaurant with the given name.
+              </Typography>
+            ):null}
             {restaurantData.map((restaurant) => (
               <Card
                 variant="outlined"
@@ -134,7 +120,7 @@ class Home extends Component {
                 <CardMedia
                   component="img"
                   alt={restaurant.restaurant_name}
-                  height="260"
+                  height="280"
                   image={restaurant.photo_URL}
                   title={restaurant.restaurant_name}
                 />
