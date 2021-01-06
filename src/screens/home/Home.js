@@ -1,21 +1,10 @@
 import React, { Component } from "react";
 import "./Home.css";
 import Header from "../../common/header/Header";
-//import { withStyles } from "@material-ui/core/styles";
-//import restaurantData from "../../common/restaurantData";
-//import GridList from "@material-ui/core/GridList";
-//import GridListTile from "@material-ui/core/GridListTile";
-//import GridListTileBar from "@material-ui/core/GridListTileBar";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-//import FormControl from "@material-ui/core/FormControl";
 import { GridList, Typography } from "@material-ui/core";
-//import ListItemText from "@material-ui/core/ListItemText";
-//import TextField from "@material-ui/core/TextField";
-//import CardActionArea from "@material-ui/core/CardActionArea";
-//import CardActions from "@material-ui/core/CardActions";
 import CardMedia from "@material-ui/core/CardMedia";
-//import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
 import "font-awesome/css/font-awesome.css";
 
@@ -38,8 +27,6 @@ const styles = (theme) => ({
   },
 });
 
-//console.log(typeof styles);
-
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -49,12 +36,6 @@ class Home extends Component {
       restaurants: [],
     };
   }
-  /*
-   xhr.onreadystatechange = function(){
-        if(xhr.readyState == 4 && xhr.status == 200){
-            var result = JSON.parse(xhr.responseText);
-            console.log(result.projects);
-    */
 
   componentWillMount() {
     let dataUpcoming = null;
@@ -62,9 +43,9 @@ class Home extends Component {
     let that = this;
     xhrUpcoming.addEventListener("readystatechange", function() {
       if (this.readyState === 4 && this.status === 200) {
-          let result = JSON.parse(this.responseText);
-          //console.log(result);
-          console.log(result.restaurants);
+        let result = JSON.parse(this.responseText);
+        //console.log(result);
+        console.log(result.restaurants);
         that.setState({
           restaurants: result.restaurants,
         });
@@ -76,8 +57,8 @@ class Home extends Component {
     xhrUpcoming.send(dataUpcoming);
   }
 
-  movieNameChangeHandler = (event) => {
-    this.setState({ movieName: event.target.value });
+  restaurantSearchChangeHandler = (event) => {
+    this.setState({ restaurantSearch: event.target.value });
   };
 
   /*
@@ -126,7 +107,7 @@ class Home extends Component {
     //console.log(this.state.restaurants);
     let restaurantData = this.state.restaurants;
     console.log(restaurantData);
-    
+
     return (
       <div>
         <Header />
@@ -179,11 +160,6 @@ class Home extends Component {
                       paddingBottom: "30px",
                     }}
                   >
-                    {/*{restaurant.categories
-                      .map((category) => {
-                        return category.category_name;
-                      })
-                    .join(", ")}*/}
                     {restaurant.categories}
                   </Typography>
                 </CardContent>
@@ -218,41 +194,6 @@ class Home extends Component {
                     {restaurant.average_price + " for two"}
                   </Icon>
                 </div>
-                {/*
-                  <CardActions style={{marginTop:"0px",paddingTop:"5px"}}>
-                    <div className="cardaction-div">
-                      <span
-                        style={{
-                          backgroundColor: "#ffd600",
-                          color: "white",
-                          width: "100px",
-                          fontWeight: "530",
-                          textAlign: "center",
-                          fontSize: 12,
-                          padding: "10px",
-                          paddingLeft: "2px",
-                          paddingRight: "2px",
-                          marginLeft: "7px",
-                        }}
-                      >
-                        <Icon
-                          className="fa fa-star"
-                          style={{ color: "white", fontSize: 12 }}
-                        />{" "}
-                        {restaurant.customer_rating +
-                          "(" +
-                          restaurant.number_of_customers_rated +
-                          ")"}
-                      </span>
-                      <Icon
-                        className="fa fa-inr"
-                        style={{ fontSize: 20, width: "130px" }}
-                      >
-                        {restaurant.average_price_for_two + " for two"}
-                      </Icon>
-                    </div>
-                  </CardActions>
-                        */}
               </Card>
             ))}
           </GridList>
@@ -263,47 +204,3 @@ class Home extends Component {
 }
 
 export default Home;
-
-/*
-
-import React from 'react';
-import { loadCSS } from 'fg-loadcss';
-import { makeStyles } from '@material-ui/core/styles';
-import { green } from '@material-ui/core/colors';
-import Icon from '@material-ui/core/Icon';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > .fa': {
-      margin: theme.spacing(2),
-    },
-  },
-}));
-
-export default function FontAwesome() {
-  const classes = useStyles();
-
-  React.useEffect(() => {
-    const node = loadCSS(
-      'https://use.fontawesome.com/releases/v5.12.0/css/all.css',
-      document.querySelector('#font-awesome-css'),
-    );
-
-    return () => {
-      node.parentNode.removeChild(node);
-    };
-  }, []);
-
-  return (
-    <div className={classes.root}>
-      <Icon className="fa fa-plus-circle" />
-      <Icon className="fa fa-plus-circle" color="primary" />
-      <Icon className="fa fa-plus-circle" color="secondary" />
-      <Icon className="fa fa-plus-circle" style={{ color: green[500] }} />
-      <Icon className="fa fa-plus-circle" fontSize="small" />
-      <Icon className="fa fa-plus-circle" style={{ fontSize: 30 }} />
-    </div>
-  );
-}
-
-*/
