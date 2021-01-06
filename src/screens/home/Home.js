@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./Home.css";
 import Header from "../../common/header/Header";
 //import { withStyles } from "@material-ui/core/styles";
-import restaurantData from "../../common/restaurantData";
+//import restaurantData from "../../common/restaurantData";
 //import GridList from "@material-ui/core/GridList";
 //import GridListTile from "@material-ui/core/GridListTile";
 //import GridListTileBar from "@material-ui/core/GridListTileBar";
@@ -43,15 +43,90 @@ const styles = (theme) => ({
 class Home extends Component {
   constructor(props) {
     super(props);
+    this.baseUrl = "http://localhost:8080/api/restaurant";
     this.state = {
+      restaurantSearch: "",
       restaurants: [],
     };
   }
+  /*
+   xhr.onreadystatechange = function(){
+        if(xhr.readyState == 4 && xhr.status == 200){
+            var result = JSON.parse(xhr.responseText);
+            console.log(result.projects);
+    */
+
+  componentWillMount() {
+    let dataUpcoming = null;
+    let xhrUpcoming = new XMLHttpRequest();
+    let that = this;
+    xhrUpcoming.addEventListener("readystatechange", function() {
+      if (this.readyState === 4 && this.status === 200) {
+          let result = JSON.parse(this.responseText);
+          //console.log(result);
+          console.log(result.restaurants);
+        that.setState({
+          restaurants: result.restaurants,
+        });
+      }
+    });
+
+    xhrUpcoming.open("GET", this.baseUrl);
+    xhrUpcoming.setRequestHeader("Cache-Control", "no-cache");
+    xhrUpcoming.send(dataUpcoming);
+  }
+
+  movieNameChangeHandler = (event) => {
+    this.setState({ movieName: event.target.value });
+  };
+
+  /*
+  movieClickHandler = (movieId) => {
+    this.props.history.push("/movie/" + movieId);
+  };
+
+  filterApplyHandler = () => {
+    let queryString = "?status=RELEASED";
+    if (this.state.movieName !== "") {
+      queryString += "&title=" + this.state.movieName;
+    }
+    if (this.state.genres.length > 0) {
+      queryString += "&genres=" + this.state.genres.toString();
+    }
+    if (this.state.artists.length > 0) {
+      queryString += "&artist_name=" + this.state.artists.toString();
+    }
+    if (this.state.releaseDateStart !== "") {
+      queryString += "&start_date=" + this.state.releaseDateStart;
+    }
+    if (this.state.releaseDateEnd !== "") {
+      queryString += "&end_date=" + this.state.releaseDateEnd;
+    }
+
+    let that = this;
+    let dataFilter = null;
+    let xhrFilter = new XMLHttpRequest();
+    xhrFilter.addEventListener("readystatechange", function() {
+      if (this.readyState === 4) {
+        that.setState({ releasedMovies: JSON.parse(this.responseText).movies });
+      }
+    });
+
+    xhrFilter.open(
+      "GET",
+      this.props.baseUrl + "movies" + encodeURI(queryString)
+    );
+    xhrFilter.setRequestHeader("Cache-Control", "no-cache");
+    xhrFilter.send(dataFilter);
+  };*/
 
   render() {
     // eslint-disable-next-line no-unused-vars
     const { classes } = this.props;
+    //console.log(this.state.restaurants);
+    let restaurantData = this.state.restaurants;
     console.log(restaurantData);
+    
     return (
       <div>
         <Header />
@@ -60,7 +135,7 @@ class Home extends Component {
             className="restaurant-list-main"
             cellHeight="auto"
             cols={4}
-            style={{ justifyContent:"flex-start", flexWrap: "wrap" }}
+            style={{ justifyContent: "flex-start", flexWrap: "wrap" }}
           >
             {restaurantData.map((restaurant) => (
               <Card
@@ -79,7 +154,7 @@ class Home extends Component {
                   component="img"
                   alt={restaurant.restaurant_name}
                   height="260"
-                  image={restaurant.photo_url}
+                  image={restaurant.photo_URL}
                   title={restaurant.restaurant_name}
                 />
                 <CardContent>
@@ -97,18 +172,19 @@ class Home extends Component {
                     color="textPrimary"
                     component="p"
                     style={{
-                      width: "80%",
+                      width: "75%",
                       textAlign: "left",
-                      fontSize: "22px",
+                      fontSize: "18px",
                       paddingTop: "20px",
                       paddingBottom: "30px",
                     }}
                   >
-                    {restaurant.categories
+                    {/*{restaurant.categories
                       .map((category) => {
                         return category.category_name;
                       })
-                      .join(", ")}
+                    .join(", ")}*/}
+                    {restaurant.categories}
                   </Typography>
                 </CardContent>
                 <div className="cardaction-div">
@@ -120,7 +196,7 @@ class Home extends Component {
                       fontWeight: "550",
                       textAlign: "center",
                       fontSize: 12,
-                      padding: "10px",
+                      padding: "9px",
                       paddingLeft: "2px",
                       paddingRight: "2px",
                       marginLeft: "10px",
@@ -132,14 +208,14 @@ class Home extends Component {
                     />{" "}
                     {restaurant.customer_rating +
                       "(" +
-                      restaurant.number_of_customers_rated +
+                      restaurant.number_customers_rated +
                       ")"}
                   </span>
                   <Icon
                     className="fa fa-inr"
                     style={{ fontSize: 20, width: "130px" }}
                   >
-                    {restaurant.average_price_for_two + " for two"}
+                    {restaurant.average_price + " for two"}
                   </Icon>
                 </div>
                 {/*
