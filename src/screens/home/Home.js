@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./Home.css";
 import Header from "../../common/header/Header";
 import Card from "@material-ui/core/Card";
+import { withStyles } from "@material-ui/core/styles";
 import CardContent from "@material-ui/core/CardContent";
 import { GridList, Typography } from "@material-ui/core";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -14,16 +15,35 @@ const styles = (theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
-  gridListReleasedMovie: {
-    padding: "20px",
-    width: "65%",
-  },
-  gridListMain: {
-    transform: "translateZ(0)",
-    cursor: "pointer",
-  },
-  title: {
-    color: theme.palette.primary.light,
+  
+  restaurantCard: {
+    margin: "9px",
+    marginBottom: "16px",
+    marginTop: "0px",
+    height: "auto",
+    [theme.breakpoints.between('xs',"sm")]: {
+        maxWidth: "90%",
+        flex:"90%",
+      },
+    
+    [theme.breakpoints.down('sm')]: {
+        maxWidth: "90%",
+        flex:"90%",
+      },
+      [theme.breakpoints.between('sm', 'md')]: {
+        maxWidth:"40%",
+        flex:"40%",
+      },
+      [theme.breakpoints.between('md',"lg")]: {
+        maxWidth:"37%",
+        flex:"37%",
+      },
+      [theme.breakpoints.up("lg")]: {
+        maxWidth:"23.5%",
+        flex:"23.5%",
+      },
+    paddingBottom: "1%",
+    position: "relative",
   },
 });
 
@@ -91,7 +111,10 @@ class Home extends Component {
 
     return (
       <div>
-        <Header baseUrl={this.baseUrl} searchHandler={this.restaurantSearchChangeHandler} />
+        <Header
+          baseUrl={this.baseUrl}
+          searchHandler={this.restaurantSearchChangeHandler}
+        />
         <div className="flex-container">
           <GridList
             className="restaurant-list-main"
@@ -100,23 +123,15 @@ class Home extends Component {
             style={{ justifyContent: "flex-start", flexWrap: "wrap" }}
           >
             {restaurantData.length === 0 ? (
-              <Typography style={{ marginLeft: "10px",fontSize:"1.3rem" }} variant="p">
+              <Typography
+                style={{ marginLeft: "10px", fontSize: "1.3rem" }}
+                variant="p"
+              >
                 No restaurant with the given name.
               </Typography>
-            ):null}
+            ) : null}
             {restaurantData.map((restaurant) => (
-              <Card
-                variant="outlined"
-                style={{
-                  margin: "9px",
-                  marginBottom: "16px",
-                  marginTop: "0px",
-                  height: "auto",
-                  width: "23.5%",
-                  paddingBottom: "1%",
-                  position: "relative",
-                }}
-              >
+              <Card variant="outlined" className={classes.restaurantCard}>
                 <CardMedia
                   component="img"
                   alt={restaurant.restaurant_name}
@@ -143,7 +158,7 @@ class Home extends Component {
                       textAlign: "left",
                       fontSize: "18px",
                       paddingTop: "20px",
-                      paddingBottom: "30px",
+                      marginBottom: "50px",
                     }}
                   >
                     {restaurant.categories}
@@ -189,4 +204,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default withStyles(styles)(Home);

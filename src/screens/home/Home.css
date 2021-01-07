@@ -16,20 +16,10 @@
   width: 98%;
   display: flex;
   margin-top: 0px;
-  padding-top: 0px;
   justify-content: space-between;
   align-items: baseline;
-  position:absolute;
-  padding:5px;
+  position: absolute;
+  padding: 5px;
   padding-bottom: 20px;
-  bottom:5px;
-}
-
-@media (max-width: 992px) {
-  .flex-container {
-    flex-direction: column;
-  }
-  .released-movie-grid-item {
-    margin: 8px;
-  }
+  bottom: 5px;
 }
