@@ -15,28 +15,38 @@ const styles = (theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
-  
+  flexContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    margin: "0 auto",
+    minHeight: "100vh",
+    marginTop: "20px",  
+  },
+
   restaurantCard: {
     margin: "9px",
     marginBottom: "16px",
     marginTop: "0px",
     height: "auto",
-    [theme.breakpoints.between('xs',"sm")]: {
-        maxWidth: "90%",
-        flex:"90%",
+    [theme.breakpoints.down('sm')]: {
+        maxWidth: "96%",
+        flex:"96%",
       },
     
-    [theme.breakpoints.down('sm')]: {
-        maxWidth: "90%",
-        flex:"90%",
+    [theme.breakpoints.between('sm','md')]: {
+        maxWidth: "45.5%",
+        flex:"45.5%",
       },
-      [theme.breakpoints.between('sm', 'md')]: {
-        maxWidth:"40%",
-        flex:"40%",
+      [theme.breakpoints.up('md')]: {
+        maxWidth: "33%",
+        flex:"33%",
       },
-      [theme.breakpoints.between('md',"lg")]: {
-        maxWidth:"37%",
-        flex:"37%",
+      [theme.breakpoints.between('md','lg')]: {
+        maxWidth:"33%",
+        flex:"33%",
       },
       [theme.breakpoints.up("lg")]: {
         maxWidth:"23.5%",
@@ -115,7 +125,7 @@ class Home extends Component {
           baseUrl={this.baseUrl}
           searchHandler={this.restaurantSearchChangeHandler}
         />
-        <div className="flex-container">
+        <div className={classes.flexContainer}>
           <GridList
             className="restaurant-list-main"
             cellHeight="auto"
