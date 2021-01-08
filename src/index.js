@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 //import Header from './common/header/Header';
 import Home from './screens/home/Home';
+//import GridTest from './GridTest';
 import 'typeface-roboto';
 import * as serviceWorker from './serviceWorker';
 

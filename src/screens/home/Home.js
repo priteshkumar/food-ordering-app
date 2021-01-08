@@ -4,10 +4,11 @@ import Header from "../../common/header/Header";
 import Card from "@material-ui/core/Card";
 import { withStyles } from "@material-ui/core/styles";
 import CardContent from "@material-ui/core/CardContent";
-import { GridList, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import CardMedia from "@material-ui/core/CardMedia";
 import Icon from "@material-ui/core/Icon";
 import "font-awesome/css/font-awesome.css";
+import Grid from "@material-ui/core/Grid";
 
 // eslint-disable-next-line no-unused-vars
 const styles = (theme) => ({
@@ -125,13 +126,14 @@ class Home extends Component {
           baseUrl={this.baseUrl}
           searchHandler={this.restaurantSearchChangeHandler}
         />
-        <div className={classes.flexContainer}>
-          <GridList
-            className="restaurant-list-main"
-            cellHeight="auto"
-            cols={4}
-            style={{ justifyContent: "flex-start", flexWrap: "wrap" }}
-          >
+        <div className={classes.root}>
+          <Grid style={{marginBottom:"30px"}}
+          container
+          spacing={1}
+          direction="row"
+          justify="flex-start"
+          alignItems="stretch"
+        >
             {restaurantData.length === 0 ? (
               <Typography
                 style={{ marginLeft: "10px", fontSize: "1.3rem" }}
@@ -141,8 +143,19 @@ class Home extends Component {
               </Typography>
             ) : null}
             {restaurantData.map((restaurant) => (
-              <Card variant="outlined" className={classes.restaurantCard}>
-                <CardMedia
+                <Grid style={{marginBottom:"8px"}}
+                item
+                xs={12}
+                sm={6}
+                md={3}
+                alignContent="stretch"
+                key={restaurantData.indexOf(restaurant)}
+              >
+                <Card
+                  variant="outlined"
+                  style={{ height: "100%",margin:"7px" ,position:"relative"}}
+                >
+              <CardMedia
                   component="img"
                   alt={restaurant.restaurant_name}
                   height="280"
@@ -206,10 +219,11 @@ class Home extends Component {
                   </Icon>
                 </div>
               </Card>
+              </Grid>
             ))}
-          </GridList>
+          </Grid>
         </div>
-      </div>
+        </div>
     );
   }
 }
