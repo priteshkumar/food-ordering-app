@@ -95,7 +95,7 @@ class Header extends Component {
       userpassRequired: "dispNone",
       contactNo: "",
       contactnumRequired: "dispNone",
-      registrationSuccess:false,
+      registrationSuccess: false,
       invalidSignUp: false,
       invalidLogin: false,
     });
@@ -120,29 +120,38 @@ class Header extends Component {
   };
 
   signupClickhandler = (event) => {
-    console.log(this.state);
-    this.setState({ invalidSignUp: false ,registrationSuccess:false});
-
     this.state.fname === ""
-      ? this.setState({ firstnameRequired: "dispBlock", invalidSignUp: true })
+      ? this.setState({ firstnameRequired: "dispBlock" })
       : this.setState({ firstnameRequired: "dispNone" });
 
     this.state.email === "" || !this.validateEmail(this.state.email)
-      ? this.setState({ emailRequired: "dispBlock", invalidSignUp: true })
+      ? this.setState({ emailRequired: "dispBlock" })
       : this.setState({ emailRequired: "dispNone" });
 
     this.state.userPassword === "" ||
     !this.validatePassword(this.state.userPassword)
-      ? this.setState({ userpassRequired: "dispBlock", invalidSignUp: true })
+      ? this.setState({ userpassRequired: "dispBlock" })
       : this.setState({ userpassRequired: "dispNone" });
 
     this.state.contactNo === "" ||
     !this.validateContactNumber(this.state.contactNo)
-      ? this.setState({ contactnumRequired: "dispBlock", invalidSignUp: true })
+      ? this.setState({ contactnumRequired: "dispBlock" })
       : this.setState({ contactnumRequired: "dispNone" });
 
-    console.log(this.state.invalidSignUp);
-    if (this.state.invalidSignUp === true) return;
+    console.log(this.state);
+
+    if (
+      this.state.fname === "" ||
+      this.state.email === "" ||
+      !this.validateEmail(this.state.email) ||
+      this.state.userPassword === "" ||
+      !this.validatePassword(this.state.userPassword) ||
+      this.state.contactNo === "" ||
+      !this.validateContactNumber(this.state.contactNo)
+    ) {
+      console.log("invalid singnup");
+      return;
+    }
 
     let that = this;
     let dataSignUp = JSON.stringify({
@@ -155,13 +164,14 @@ class Header extends Component {
 
     let xhrSignup = new XMLHttpRequest();
     xhrSignup.addEventListener("readystatechange", function() {
-      if (this.readyState === 4) {
+      if (this.readyState === 4 && this.status === 201) {
         console.log(this.responseText);
-        that.setState({ value: 0, registrationSuccess: true });
+        that.setState({ value: 0 });
+        that.setState({ registrationSuccess: true });
       }
     });
 
-    xhrSignup.open("POST", this.props.baseUrl + "/signup");
+    xhrSignup.open("POST", this.props.baseUrl + "/customer/signup");
     xhrSignup.setRequestHeader("Content-Type", "application/json");
     xhrSignup.setRequestHeader("Cache-Control", "no-cache");
     xhrSignup.send(dataSignUp);
