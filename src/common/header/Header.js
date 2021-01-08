@@ -72,7 +72,8 @@ class Header extends Component {
       contactNo: "",
       contactnumRequired: "dispNone",
       registrationSuccess: false,
-      invalidSignUp: false,
+      signupError: "dispNone",
+      signupErrorMsg: "",
       invalidLogin: false,
     };
   }
@@ -96,7 +97,8 @@ class Header extends Component {
       contactNo: "",
       contactnumRequired: "dispNone",
       registrationSuccess: false,
-      invalidSignUp: false,
+      signupError: "dispNone",
+      signupErrorMsg: "",
       invalidLogin: false,
     });
   };
@@ -109,7 +111,7 @@ class Header extends Component {
     this.setState({ value: value });
   };
 
-  btnClickhandler = (event) => {
+  loginClickhandler = (event) => {
     console.log(this.state.username);
     this.state.username === ""
       ? this.setState({ usernameRequired: "dispBlock" })
@@ -164,10 +166,27 @@ class Header extends Component {
 
     let xhrSignup = new XMLHttpRequest();
     xhrSignup.addEventListener("readystatechange", function() {
-      if (this.readyState === 4 && this.status === 201) {
-        console.log(this.responseText);
-        that.setState({ value: 0 });
-        that.setState({ registrationSuccess: true });
+      console.log(this.readyState + " " + this.status);
+      if (this.readyState === 4) {
+        switch (this.status) {
+          case 201: {
+            console.log(this.responseText);
+            that.setState({ value: 0 });
+            that.setState({ registrationSuccess: true });
+            break;
+          }
+          case 400: {
+            let errorMsg = JSON.parse(this.responseText);
+            console.log(errorMsg);
+            that.setState({ signupError: "dispBlock" });
+            that.setState({
+              signupErrorMsg: errorMsg.message,
+            });
+            break;
+          }
+          default:
+            break;
+        }
       }
     });
 
@@ -342,7 +361,7 @@ class Header extends Component {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={this.btnClickhandler}
+                onClick={this.loginClickhandler}
               >
                 LOGIN
               </Button>
@@ -438,6 +457,14 @@ class Header extends Component {
                 </FormHelperText>
               </FormControl>
               <br />
+              <FormHelperText className={this.state.signupError}>
+                <span
+                  className="red"
+                  style={{ marginTop: "15px", fontSize: "1rem" }}
+                >
+                  {this.state.signupErrorMsg}
+                </span>
+              </FormHelperText>
               <br />
               <Button
                 variant="contained"
