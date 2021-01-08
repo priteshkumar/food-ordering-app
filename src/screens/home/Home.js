@@ -136,8 +136,8 @@ class Home extends Component {
         >
             {restaurantData.length === 0 ? (
               <Typography
-                style={{ marginLeft: "10px", fontSize: "1.3rem" }}
-                variant="p"
+                style={{ marginLeft: "10px", fontSize: "1.2rem" }}
+                variant="body1"
               >
                 No restaurant with the given name.
               </Typography>
@@ -174,7 +174,6 @@ class Home extends Component {
                     gutterBottom
                     variant="body1"
                     color="textPrimary"
-                    component="p"
                     style={{
                       width: "75%",
                       textAlign: "left",
