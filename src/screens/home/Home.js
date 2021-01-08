@@ -148,7 +148,6 @@ class Home extends Component {
                 xs={12}
                 sm={6}
                 md={3}
-                alignContent="stretch"
                 key={restaurantData.indexOf(restaurant)}
               >
                 <Card
