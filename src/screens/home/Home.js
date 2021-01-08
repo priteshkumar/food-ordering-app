@@ -24,7 +24,7 @@ const styles = (theme) => ({
     alignItems: "flex-start",
     margin: "0 auto",
     minHeight: "100vh",
-    marginTop: "20px",  
+    marginTop: "20px",
   },
 
   restaurantCard: {
@@ -32,27 +32,27 @@ const styles = (theme) => ({
     marginBottom: "16px",
     marginTop: "0px",
     height: "auto",
-    [theme.breakpoints.down('sm')]: {
-        maxWidth: "96%",
-        flex:"96%",
-      },
-    
-    [theme.breakpoints.between('sm','md')]: {
-        maxWidth: "45.5%",
-        flex:"45.5%",
-      },
-      [theme.breakpoints.up('md')]: {
-        maxWidth: "33%",
-        flex:"33%",
-      },
-      [theme.breakpoints.between('md','lg')]: {
-        maxWidth:"33%",
-        flex:"33%",
-      },
-      [theme.breakpoints.up("lg")]: {
-        maxWidth:"23.5%",
-        flex:"23.5%",
-      },
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: "96%",
+      flex: "96%",
+    },
+
+    [theme.breakpoints.between("sm", "md")]: {
+      maxWidth: "45.5%",
+      flex: "45.5%",
+    },
+    [theme.breakpoints.up("md")]: {
+      maxWidth: "33%",
+      flex: "33%",
+    },
+    [theme.breakpoints.between("md", "lg")]: {
+      maxWidth: "33%",
+      flex: "33%",
+    },
+    [theme.breakpoints.up("lg")]: {
+      maxWidth: "23.5%",
+      flex: "23.5%",
+    },
     paddingBottom: "1%",
     position: "relative",
   },
@@ -61,7 +61,7 @@ const styles = (theme) => ({
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.baseUrl = "http://localhost:8080/api/restaurant";
+    this.baseUrl = "http://localhost:8080/api";
     this.state = {
       restaurantSearch: "",
       restaurants: [],
@@ -83,7 +83,7 @@ class Home extends Component {
       }
     });
 
-    xhrUpcoming.open("GET", this.baseUrl);
+    xhrUpcoming.open("GET", this.baseUrl + "/restaurant");
     xhrUpcoming.setRequestHeader("Cache-Control", "no-cache");
     xhrUpcoming.send(dataUpcoming);
   }
@@ -103,7 +103,7 @@ class Home extends Component {
       }
     });
 
-    xhrFilter.open("GET", this.baseUrl + "/name/" + restaurantSearch);
+    xhrFilter.open("GET", this.baseUrl + "/restaurant/name/" + restaurantSearch);
     xhrFilter.setRequestHeader("Cache-Control", "no-cache");
     xhrFilter.send();
   };
@@ -127,13 +127,14 @@ class Home extends Component {
           searchHandler={this.restaurantSearchChangeHandler}
         />
         <div className={classes.root}>
-          <Grid style={{marginBottom:"30px"}}
-          container
-          spacing={1}
-          direction="row"
-          justify="flex-start"
-          alignItems="stretch"
-        >
+          <Grid
+            style={{ marginBottom: "30px" }}
+            container
+            spacing={1}
+            direction="row"
+            justify="flex-start"
+            alignItems="stretch"
+          >
             {restaurantData.length === 0 ? (
               <Typography
                 style={{ marginLeft: "10px", fontSize: "1.2rem" }}
@@ -143,7 +144,8 @@ class Home extends Component {
               </Typography>
             ) : null}
             {restaurantData.map((restaurant) => (
-                <Grid style={{marginBottom:"8px"}}
+              <Grid
+                style={{ marginBottom: "8px" }}
                 item
                 xs={12}
                 sm={6}
@@ -152,76 +154,80 @@ class Home extends Component {
               >
                 <Card
                   variant="outlined"
-                  style={{ height: "100%",margin:"7px" ,position:"relative"}}
+                  style={{
+                    height: "100%",
+                    margin: "7px",
+                    position: "relative",
+                  }}
                 >
-              <CardMedia
-                  component="img"
-                  alt={restaurant.restaurant_name}
-                  height="280"
-                  image={restaurant.photo_URL}
-                  title={restaurant.restaurant_name}
-                />
-                <CardContent>
-                  <Typography
-                    variant="h5"
-                    gutterBottom
-                    style={{ marginBottom: "12px" }}
-                  >
-                    {restaurant.restaurant_name}
-                  </Typography>
+                  <CardMedia
+                    component="img"
+                    alt={restaurant.restaurant_name}
+                    height="280"
+                    image={restaurant.photo_URL}
+                    title={restaurant.restaurant_name}
+                  />
+                  <CardContent>
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      style={{ marginBottom: "12px" }}
+                    >
+                      {restaurant.restaurant_name}
+                    </Typography>
 
-                  <Typography
-                    gutterBottom
-                    variant="body1"
-                    color="textPrimary"
-                    style={{
-                      width: "75%",
-                      textAlign: "left",
-                      fontSize: "18px",
-                      paddingTop: "20px",
-                      marginBottom: "50px",
-                    }}
-                  >
-                    {restaurant.categories}
-                  </Typography>
-                </CardContent>
-                <div className="cardaction-div">
-                  <span
-                    style={{
-                      backgroundColor: "#fdd835",
-                      color: "white",
-                      width: "100px",
-                      fontWeight: "550",
-                      textAlign: "center",
-                      fontSize: 12,
-                      padding: "9px",
-                      paddingLeft: "2px",
-                      paddingRight: "2px",
-                      marginLeft: "10px",
-                    }}
-                  >
+                    <Typography
+                      gutterBottom
+                      variant="body1"
+                      color="textPrimary"
+                      style={{
+                        width: "75%",
+                        textAlign: "left",
+                        fontSize: "18px",
+                        paddingTop: "20px",
+                        marginBottom: "50px",
+                      }}
+                    >
+                      {restaurant.categories}
+                    </Typography>
+                  </CardContent>
+                  <div className="cardaction-div">
+                    <span
+                      style={{
+                        backgroundColor: "#fdd835",
+                        color: "white",
+                        width: "100px",
+                        fontWeight: "550",
+                        textAlign: "center",
+                        fontSize: 12,
+                        padding: "9px",
+                        paddingLeft: "2px",
+                        paddingRight: "2px",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      <Icon
+                        className="fa fa-star"
+                        style={{ color: "white", fontSize: 12 }}
+                      />{" "}
+                      {restaurant.customer_rating +
+                        "(" +
+                        restaurant.number_customers_rated +
+                        ")"}
+                    </span>
                     <Icon
-                      className="fa fa-star"
-                      style={{ color: "white", fontSize: 12 }}
-                    />{" "}
-                    {restaurant.customer_rating +
-                      "(" +
-                      restaurant.number_customers_rated +
-                      ")"}
-                  </span>
-                  <Icon
-                    className="fa fa-inr"
-                    style={{ fontSize: 20, width: "130px" }}
-                  >
-                    {restaurant.average_price + " for two"}
-                  </Icon>
-                </div>
-              </Card>
+                      className="fa fa-inr"
+                      style={{ fontSize: 20, width: "130px" }}
+                    >
+                      {restaurant.average_price + " for two"}
+                    </Icon>
+                  </div>
+                </Card>
               </Grid>
             ))}
           </Grid>
         </div>
-        </div>
+      </div>
     );
   }
 }

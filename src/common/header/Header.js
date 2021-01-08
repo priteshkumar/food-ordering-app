@@ -19,91 +19,6 @@ import FastfoodIcon from "@material-ui/icons/Fastfood";
 import Snackbar from "@material-ui/core/Snackbar";
 import "./Header.css";
 
-/*
-underline: {
-      '&:after': {
-        borderBottom: `2px solid ${theme.palette.primary.main}`,
-        left: 0,
-        bottom: 0,
-        // Doing the other way around crash on IE 11 "''" https://github.com/cssinjs/jss/issues/242
-        content: '""',
-        position: 'absolute',
-        right: 0,
-        transform: 'scaleX(0)',
-        transition: theme.transitions.create('transform', {
-          duration: theme.transitions.duration.shorter,
-          easing: theme.transitions.easing.easeOut,
-        }),
-        pointerEvents: 'none', // Transparent to the hover style.
-      },
-*/
-
-/*const useStyles = makeStyles((theme) => ({
-  grow: {
-    flexGrow: 1,
-  },
-  
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    display: "none",
-    [theme.breakpoints.up("sm")]: {
-      display: "block",
-    },
-  },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "30%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  inputRoot: {
-    color: "inherit",
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-  sectionDesktop: {
-    display: "none",
-    [theme.breakpoints.up("md")]: {
-      display: "flex",
-    },
-  },
-  sectionMobile: {
-    display: "flex",
-    [theme.breakpoints.up("md")]: {
-      display: "none",
-    },
-  },
-}));
-*/
-
 const darkTheme = createMuiTheme({
   palette: {
     primary: {
@@ -138,7 +53,6 @@ TabContainer.propTypes = {
 class Header extends Component {
   constructor(props) {
     super(props);
-    // eslint-disable-next-line react/no-direct-mutation-state
     this.state = {
       searchText: "",
       ModalIsOpen: false,
@@ -181,6 +95,7 @@ class Header extends Component {
       userpassRequired: "dispNone",
       contactNo: "",
       contactnumRequired: "dispNone",
+      registrationSuccess:false,
       invalidSignUp: false,
       invalidLogin: false,
     });
@@ -206,7 +121,7 @@ class Header extends Component {
 
   signupClickhandler = (event) => {
     console.log(this.state);
-    this.setState({ invalidSignUp: false });
+    this.setState({ invalidSignUp: false ,registrationSuccess:false});
 
     this.state.fname === ""
       ? this.setState({ firstnameRequired: "dispBlock", invalidSignUp: true })
@@ -226,6 +141,7 @@ class Header extends Component {
       ? this.setState({ contactnumRequired: "dispBlock", invalidSignUp: true })
       : this.setState({ contactnumRequired: "dispNone" });
 
+    console.log(this.state.invalidSignUp);
     if (this.state.invalidSignUp === true) return;
 
     let that = this;
@@ -312,8 +228,8 @@ class Header extends Component {
   };
 
   handlesnackBarClose = (e) => {
-    this.setState({registrationSuccess:false});
-  }
+    this.setState({ registrationSuccess: false });
+  };
 
   render() {
     let invalidPasswordMsg =
