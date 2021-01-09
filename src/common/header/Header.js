@@ -436,10 +436,19 @@ class Header extends Component {
               </IconButton>
               <Menu
                 id="logged-in-menu"
+                getContentAnchorEl={null}
                 anchorEl={this.state.anchorEl}
                 keepMounted
                 open={Boolean(this.state.anchorEl)}
                 onClose={this.closeMenuHandler}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'center',
+                }}
               >
                 <MenuItem onClick={this.profileHandler}>My Profile</MenuItem>
                 <MenuItem onClick={this.logoutHandler}>Logout</MenuItem>
