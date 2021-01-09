@@ -8,6 +8,11 @@
   height: 100vh;
   padding-top: 20px;
 }
+.gridContainer {
+  margin-left:4px;
+  margin-right:4px;
+  width:calc(100% - 8px);
+}
 .restaurant-list-main {
   width: 100%;
   display: flex;

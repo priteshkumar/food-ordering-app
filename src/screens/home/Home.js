@@ -129,9 +129,9 @@ class Home extends Component {
           searchHandler={this.restaurantSearchChangeHandler}
           profileHandler={this.profileHandler}
         />
-        <div className={classes.root}>
+        <div className={`classes.root gridContainer`} >
           <Grid
-            style={{ marginBottom: "30px" }}
+            style={{ marginBottom: "20px",marginTop:"20px" }}
             container
             spacing={1}
             direction="row"
