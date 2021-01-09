@@ -320,6 +320,7 @@ class Header extends Component {
 
   profileHandler = (e) => {
     console.log("navigate to profile page");
+    this.props.profileHandler();
   };
 
   logoutHandler = (e) => {

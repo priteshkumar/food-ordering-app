@@ -103,15 +103,17 @@ class Home extends Component {
       }
     });
 
-    xhrFilter.open("GET", this.baseUrl + "/restaurant/name/" + restaurantSearch);
+    xhrFilter.open(
+      "GET",
+      this.baseUrl + "/restaurant/name/" + restaurantSearch
+    );
     xhrFilter.setRequestHeader("Cache-Control", "no-cache");
     xhrFilter.send();
   };
 
-  /*
-  movieClickHandler = (movieId) => {
-    this.props.history.push("/movie/" + movieId);
-  };*/
+  profileHandler = () => {
+    this.props.history.push("/profile");
+  };
 
   render() {
     // eslint-disable-next-line no-unused-vars
@@ -125,6 +127,7 @@ class Home extends Component {
         <Header
           baseUrl={this.baseUrl}
           searchHandler={this.restaurantSearchChangeHandler}
+          profileHandler={this.profileHandler}
         />
         <div className={classes.root}>
           <Grid
