@@ -13,6 +13,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import PropTypes from "prop-types";
+//import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
@@ -74,7 +75,7 @@ class Header extends Component {
       registrationSuccess: false,
       signupError: "dispNone",
       signupErrorMsg: "",
-      invalidLogin: false,
+      loggedIn: false,
     };
   }
 
@@ -99,7 +100,7 @@ class Header extends Component {
       registrationSuccess: false,
       signupError: "dispNone",
       signupErrorMsg: "",
-      invalidLogin: false,
+      loggedIn: false,
     });
   };
 
@@ -113,12 +114,53 @@ class Header extends Component {
 
   loginClickhandler = (event) => {
     console.log(this.state.username);
-    this.state.username === ""
+    this.state.username === "" ||
+    !this.validateContactNumber(this.state.username)
       ? this.setState({ usernameRequired: "dispBlock" })
       : this.setState({ usernameRequired: "dispNone" });
     this.state.password === ""
       ? this.setState({ passwordRequired: "dispBlock" })
       : this.setState({ passwordRequired: "dispNone" });
+
+    if (
+      this.state.username === "" ||
+      !this.validateContactNumber(this.state.username) ||
+      this.state.password === ""
+    ) {
+      return;
+    }
+
+    let that = this;
+    let dataLogin = null;
+
+    let xhrLogin = new XMLHttpRequest();
+    xhrLogin.addEventListener("readystatechange", function() {
+      if (this.readyState === 4 && this.status === 200) {
+        console.log(xhrLogin.getResponseHeader("access-token"));
+
+        sessionStorage.setItem("uuid", JSON.parse(this.responseText).id);
+        sessionStorage.setItem(
+          "loggedinUser",
+          JSON.parse(this.responseText).first_name
+        );  
+        sessionStorage.setItem(
+          "access-token",
+          xhrLogin.getResponseHeader("access-token")
+        );
+
+        that.setState({ loggedIn: true });
+        that.closeModalHandler();
+      }
+    });
+
+    xhrLogin.open("POST", this.props.baseUrl + "/customer/login");
+    xhrLogin.setRequestHeader(
+      "Authorization",
+      "Basic " + window.btoa(this.state.username + ":" + this.state.password)
+    );
+    xhrLogin.setRequestHeader("Content-Type", "application/json");
+    xhrLogin.setRequestHeader("Cache-Control", "no-cache");
+    xhrLogin.send(dataLogin);
   };
 
   signupClickhandler = (event) => {
@@ -296,16 +338,24 @@ class Header extends Component {
           </ThemeProvider>
         </div>
         <div className="loginbtn-div">
-          <Button
-            style={{ marginRight: "15px" }}
-            variant="contained"
-            color="default"
-            size="medium"
-            startIcon={<AccountCircle />}
-            onClick={this.openModalHandler}
-          >
-            LOGIN
-          </Button>
+          {!this.state.loggedIn ? (
+            <Button
+              style={{ marginRight: "15px" }}
+              variant="contained"
+              color="default"
+              size="medium"
+              startIcon={<AccountCircle />}
+              onClick={this.openModalHandler}
+            >
+              LOGIN
+            </Button>
+          ) : (
+            <IconButton color="secondary" aria-label="user profile">
+            <AccountCircle /><span style={{ colot: "white" }}>
+             {sessionStorage.getItem("loggedinUser")}
+            </span>
+            </IconButton>
+          )}
         </div>
         <Modal
           style={customStyles}
@@ -336,7 +386,9 @@ class Header extends Component {
                 />
                 <FormHelperText className={this.state.usernameRequired}>
                   <span className="red" style={{ color: "red" }}>
-                    required
+                    {this.state.username === ""
+                      ? "required"
+                      : "Invalid Contact"}
                   </span>
                 </FormHelperText>
               </FormControl>
