@@ -12,6 +12,9 @@ import Typography from "@material-ui/core/Typography";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+//import ListItemText from "@material-ui/core/ListItemText";
 import PropTypes from "prop-types";
 //import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
@@ -76,6 +79,7 @@ class Header extends Component {
       signupError: "dispNone",
       signupErrorMsg: "",
       loggedIn: false,
+      anchorEl: null,
     };
   }
 
@@ -101,6 +105,8 @@ class Header extends Component {
       signupError: "dispNone",
       signupErrorMsg: "",
       loggedIn: false,
+      anchorEl: null,
+      snackDisp: false,
     });
   };
 
@@ -142,13 +148,14 @@ class Header extends Component {
         sessionStorage.setItem(
           "loggedinUser",
           JSON.parse(this.responseText).first_name
-        );  
+        );
         sessionStorage.setItem(
           "access-token",
           xhrLogin.getResponseHeader("access-token")
         );
 
         that.setState({ loggedIn: true });
+        that.setState({ snackDisp: true });
         that.closeModalHandler();
       }
     });
@@ -300,6 +307,44 @@ class Header extends Component {
 
   handlesnackBarClose = (e) => {
     this.setState({ registrationSuccess: false });
+    this.setState({ snackDisp: false });
+  };
+
+  openMenuHandler = (e) => {
+    this.setState({ anchorEl: e.currentTarget });
+  };
+
+  closeMenuHandler = (e) => {
+    this.setState({ anchorEl: null });
+  };
+
+  profileHandler = (e) => {
+    console.log("navigate to profile page");
+  };
+
+  logoutHandler = (e) => {
+    
+    let that = this;
+
+    let xhrLogin = new XMLHttpRequest();
+    xhrLogin.addEventListener("readystatechange", function() {
+      if (this.readyState === 4 && this.status === 200) {
+        sessionStorage.removeItem("uuid");
+        sessionStorage.removeItem("access-token");
+        sessionStorage.removeItem("loggedinUser");
+        that.setState({ loggedIn: false });
+        console.log("loggedout customer");
+      }
+    });
+
+    xhrLogin.open("POST", this.props.baseUrl + "/customer/logout");
+    xhrLogin.setRequestHeader(
+      "Authorization",
+      "Bearer " + sessionStorage.getItem("access-token")
+    );
+    xhrLogin.setRequestHeader("Content-Type", "application/json");
+    xhrLogin.setRequestHeader("Cache-Control", "no-cache");
+    xhrLogin.send();
   };
 
   render() {
@@ -350,11 +395,46 @@ class Header extends Component {
               LOGIN
             </Button>
           ) : (
-            <IconButton color="secondary" aria-label="user profile">
-            <AccountCircle /><span style={{ colot: "white" }}>
-             {sessionStorage.getItem("loggedinUser")}
-            </span>
-            </IconButton>
+            <>
+              <IconButton
+                aria-controls="logged-in-menu"
+                aria-haspopup="true"
+                style={{
+                  textAlign: "left",
+                  marginRight: "14px",
+                  color: "white",
+                }}
+                aria-label="user profile"
+                onMouseOver={this.openMenuHandler}
+              >
+                <AccountCircle
+                  style={{
+                    marginLeft: "-7px",
+                    marginBottom: "-2px",
+                    fontSize: "1rem",
+                  }}
+                />{" "}
+                <span
+                  style={{
+                    paddingLeft: "5px",
+                    fontSize: "1rem",
+                    color: "lightgrey",
+                  }}
+                >
+                  {" " + sessionStorage.getItem("loggedinUser")}
+                </span>
+              </IconButton>
+              <Menu
+                id="logged-in-menu"
+                anchorEl={this.state.anchorEl}
+                keepMounted
+                open={Boolean(this.state.anchorEl)}
+                onClose={this.closeMenuHandler}
+              >
+                <MenuItem onClick={this.profileHandler}>My Profile</MenuItem>
+                <MenuItem onClick={this.logoutHandler}>Logout</MenuItem>
+              </Menu>
+            </>
           )}
         </div>
         <Modal
@@ -530,10 +610,14 @@ class Header extends Component {
         </Modal>
         <Snackbar
           anchorOrigin={{ vertical, horizontal }}
-          open={this.state.registrationSuccess}
+          open={this.state.registrationSuccess || this.state.snackDisp}
           onClose={this.handlesnackBarClose}
           autoHideDuration={3000}
-          message="Registered successfully! Please login now!"
+          message={
+            this.state.snackDisp === true
+              ? "Logged in successfully!"
+              : "Registered successfully! Please login now!"
+          }
           key={vertical + horizontal}
         />
       </div>

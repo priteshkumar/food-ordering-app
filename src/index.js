@@ -1,15 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-//import Header from './common/header/Header';
-import Home from './screens/home/Home';
-//import GridTest from './GridTest';
+import Controller from './screens/Controller';
 import 'typeface-roboto';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
     <div>
-        <Home />
+        <Controller />
     </div>,
     document.getElementById('root')
 );
