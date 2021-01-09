@@ -10,7 +10,6 @@ import Icon from "@material-ui/core/Icon";
 import "font-awesome/css/font-awesome.css";
 import Grid from "@material-ui/core/Grid";
 
-// eslint-disable-next-line no-unused-vars
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
@@ -116,7 +115,6 @@ class Home extends Component {
   };
 
   render() {
-    // eslint-disable-next-line no-unused-vars
     const { classes } = this.props;
     //console.log(this.state.restaurants);
     let restaurantData = this.state.restaurants;
@@ -129,9 +127,9 @@ class Home extends Component {
           searchHandler={this.restaurantSearchChangeHandler}
           profileHandler={this.profileHandler}
         />
-        <div className={`classes.root gridContainer`} >
+        <div className={`${classes.root} gridContainer`}>
           <Grid
-            style={{ marginBottom: "20px",marginTop:"20px" }}
+            style={{ marginBottom: "20px", marginTop: "20px" }}
             container
             spacing={1}
             direction="row"
