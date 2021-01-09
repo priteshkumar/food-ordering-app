@@ -79,7 +79,10 @@ class Header extends Component {
       signupError: "dispNone",
       signupErrorMsg: "",
       loggedIn: false,
+      loginError:"dispNone",
+      loginErrorMsg:"",
       anchorEl: null,
+      snackDisp:false,
     };
   }
 
@@ -105,6 +108,8 @@ class Header extends Component {
       signupError: "dispNone",
       signupErrorMsg: "",
       loggedIn: false,
+      loginError:"dispNone",
+      loginErrorMsg:"",
       anchorEl: null,
       snackDisp: false,
     });
@@ -157,6 +162,11 @@ class Header extends Component {
         that.setState({ loggedIn: true });
         that.setState({ snackDisp: true });
         that.closeModalHandler();
+      }
+      else if(this.readyState === 4 && this.status !== 200){
+        let errorMsg = JSON.parse(this.responseText);
+        that.setState({loginError:"dispBlock"});
+        that.setState({loginErrorMsg:errorMsg.message});
       }
     });
 
@@ -324,7 +334,6 @@ class Header extends Component {
   };
 
   logoutHandler = (e) => {
-    
     let that = this;
 
     let xhrLogin = new XMLHttpRequest();
@@ -490,6 +499,16 @@ class Header extends Component {
                 </FormHelperText>
               </FormControl>
               <br />
+              <FormControl>
+              <FormHelperText style={{marginTop:"15px",marginBottom:"15px"}} className={this.state.loginError}>
+                <span
+                  className="red"
+                  style={{ paddingTop: "5px", fontSize: "1rem" }}
+                >
+                  {this.state.loginErrorMsg}
+                </span>
+              </FormHelperText>
+              </FormControl>
               <br />
               <Button
                 variant="contained"
