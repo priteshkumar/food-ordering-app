@@ -131,6 +131,7 @@ class Home extends Component {
           baseUrl={this.baseUrl}
           searchHandler={this.restaurantSearchChangeHandler}
           profileHandler={this.profileHandler}
+          showSearchBox="true"
         />
         <div className={`${classes.root} gridContainer`}>
           <Grid
