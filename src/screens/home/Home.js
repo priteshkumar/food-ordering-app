@@ -67,7 +67,7 @@ class Home extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     let dataUpcoming = null;
     let xhrUpcoming = new XMLHttpRequest();
     let that = this;
