@@ -114,6 +114,11 @@ class Home extends Component {
     this.props.history.push("/profile");
   };
 
+  restaurantClickHandler = (restaurantId) => {
+      console.log("restaurant details for " + restaurantId)
+      this.props.history.push('/restaurant/' + restaurantId);
+  }
+
   render() {
     const { classes } = this.props;
     //console.log(this.state.restaurants);
@@ -151,7 +156,8 @@ class Home extends Component {
                 xs={12}
                 sm={6}
                 md={3}
-                key={restaurantData.indexOf(restaurant)}
+                key={"grid" + restaurant.id}
+                onClick={() => this.restaurantClickHandler(restaurant.id)}
               >
                 <Card
                   variant="outlined"
