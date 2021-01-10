@@ -5,6 +5,7 @@ import Icon from "@material-ui/core/Icon";
 import Typography from "@material-ui/core/Typography";
 //import ButtonBase from "@material-ui/core/ButtonBase";
 import "font-awesome/css/font-awesome.css";
+import Header from '../../common/header/Header';
 
 const styles = (theme) => ({
   root: {
@@ -40,6 +41,9 @@ class Details extends Component {
 
     return (
       <div className={classes.root}>
+        <Header
+          baseUrl={this.baseUrl}
+        />
         <div className={classes.paper}>
           <Grid container spacing={3} direction="row" alignItems="flex-start">
             <Grid item xs={8} sm={3} md={4} lg={4}>
