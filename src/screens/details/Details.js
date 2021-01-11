@@ -53,10 +53,17 @@ const styles = (theme) => ({
   },
   restaurantName: {
     [theme.breakpoints.down("sm")]: {
-      fontSize: "2rem",
+      fontSize: "2.3rem",
+      paddingBottom:"0px"
     },
     [theme.breakpoints.up("sm")]: {
       fontSize: "3rem",
+      paddingBottom:"5px"
+    },
+  },
+  restaurantLocality: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.3rem",
     },
   },
 });
@@ -127,12 +134,12 @@ class Details extends Component {
                 className={classes.restaurantInfo}
               >
                 <Grid item xs>
-                  <Typography variant="h3" style={{paddingBottom:"5px"}}>
+                  <Typography variant="h3" className={classes.restaurantName}>
                     {restaurant.restaurant_name}
                   </Typography>
                   </Grid>
                   <Grid item xs>
-                  <Typography variant="h5" gutterBottom>
+                  <Typography variant="h5" gutterBottom className={classes.restaurantLocality}>
                     {restaurant.address.locality.toUpperCase()}
                   </Typography>
                   </Grid>
