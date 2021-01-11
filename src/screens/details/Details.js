@@ -11,6 +11,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import Divider from "@material-ui/core/Divider";
+import Box from "@material-ui/core/Box";
 //import ButtonBase from "@material-ui/core/ButtonBase";
 import "font-awesome/css/font-awesome.css";
 import Header from "../../common/header/Header";
@@ -200,9 +201,9 @@ class Details extends Component {
           </div>
         )}
         {this.state.restaurant !== null && (
-          <Grid container spacing={2} justify="space-around">
+          <Grid container spacing={2} justify="flex-start">
             <Grid item xs={12} md={6}>
-              <div>
+              <Box mt={3}>
                 <List dense={false} subheader={<li />}>
                   {restaurant.categories.map((category) => (
                     <>
@@ -259,7 +260,7 @@ class Details extends Component {
                     </>
                   ))}
                 </List>
-              </div>
+              </Box>
             </Grid>
           </Grid>
         )}
