@@ -54,7 +54,6 @@ const styles = (theme) => ({
   restaurantName: {
     [theme.breakpoints.down("sm")]: {
       fontSize: "2rem",
-      margin: "0 auto",
     },
     [theme.breakpoints.up("sm")]: {
       fontSize: "3rem",
@@ -101,7 +100,7 @@ class Details extends Component {
           <div className={classes.paper}>
             <Grid
               container
-              spacing={6}
+              spacing={5}
               direction="row"
               alignItems="flex-start"
               justify="flex-start"
@@ -128,16 +127,20 @@ class Details extends Component {
                 className={classes.restaurantInfo}
               >
                 <Grid item xs>
-                  <Typography gutterBottom variant="h3">
+                  <Typography variant="h3" style={{paddingBottom:"5px"}}>
                     {restaurant.restaurant_name}
                   </Typography>
+                  </Grid>
+                  <Grid item xs>
                   <Typography variant="h5" gutterBottom>
                     {restaurant.address.locality.toUpperCase()}
                   </Typography>
+                  </Grid>
+                  <Grid item xs={10} sm={12}>
                   <Typography
                     variant="h6"
                     color="textPrimary"
-                    style={{ fontWeight: "400" }}
+                    style={{ fontWeight: "400"}}
                     gutterBottom
                   >
                     {restaurant.categories
@@ -146,7 +149,7 @@ class Details extends Component {
                       })
                       .join(", ")}
                   </Typography>
-                </Grid>
+                  </Grid>
                 <br />
                 <Grid item container direction="row" justify="space-between">
                   <Grid item xs>
