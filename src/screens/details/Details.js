@@ -122,7 +122,7 @@ class Details extends Component {
                     {restaurant.restaurant_name}
                   </Typography>
                   <Typography variant="h5" gutterBottom>
-                    {restaurant.address.locality}
+                    {restaurant.address.locality.toUpperCase()}
                   </Typography>
                   <Typography
                     variant="h6"
