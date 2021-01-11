@@ -3,9 +3,18 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Icon from "@material-ui/core/Icon";
 import Typography from "@material-ui/core/Typography";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemText from "@material-ui/core/ListItemText";
+import IconButton from "@material-ui/core/IconButton";
+import AddIcon from "@material-ui/icons/Add";
+import Divider from "@material-ui/core/Divider";
 //import ButtonBase from "@material-ui/core/ButtonBase";
 import "font-awesome/css/font-awesome.css";
 import Header from "../../common/header/Header";
+import { ListSubheader } from "@material-ui/core";
 
 const styles = (theme) => ({
   root: {
@@ -31,7 +40,7 @@ const styles = (theme) => ({
     display: "block",
     maxWidth: "94%",
     maxHeight: "100%",
-    height:"280px",
+    height: "280px",
   },
   restaurantInfo: {
     [theme.breakpoints.down("sm")]: {
@@ -189,6 +198,70 @@ class Details extends Component {
               </Grid>
             </Grid>
           </div>
+        )}
+        {this.state.restaurant !== null && (
+          <Grid container spacing={2} justify="space-around">
+            <Grid item xs={12} md={6}>
+              <div>
+                <List dense={false} subheader={<li />}>
+                  {restaurant.categories.map((category) => (
+                    <>
+                      <ListSubheader disableSticky={true}>
+                        {category.category_name.toUpperCase()}
+                      </ListSubheader>
+                      <Divider />
+                      {category.item_list.map((item) => (
+                        <ListItem>
+                          <ListItemIcon>
+                            <Icon
+                              className="fa fa-circle"
+                              style={{
+                                color:
+                                  item.item_type === "VEG" ? "green" : "red",
+                                  fontSize:"1.1rem"
+                              }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText
+                            primary={item.item_name
+                              .split(" ")
+                              .map((word) => {
+                                return (
+                                  word.substr(0, 1).toUpperCase() +
+                                  word.substr(1)
+                                );
+                              })
+                              .join(" ")}
+                          />
+                          <ListItemSecondaryAction>
+                            <IconButton edge="end" aria-label="additem">
+                              <span
+                                style={{
+                                  marginRight: "3em",
+                                  fontSize: "1.1rem",
+                                  color: "black",
+                                }}
+                              >
+                                <Icon
+                                  className="fa fa-inr"
+                                  style={{
+                                    marginBottom: "-2px",
+                                    fontSize: "1rem",
+                                  }}
+                                />
+                                {item.price}
+                              </span>
+                              <AddIcon />
+                            </IconButton>
+                          </ListItemSecondaryAction>
+                        </ListItem>
+                      ))}
+                    </>
+                  ))}
+                </List>
+              </div>
+            </Grid>
+          </Grid>
         )}
       </div>
     );
