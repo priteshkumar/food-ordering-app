@@ -78,7 +78,12 @@ const styles = (theme) => ({
 class Details extends Component {
   constructor(props) {
     super(props);
-    this.state = { restaurant: null };
+    this.state = {
+      restaurant: null,
+      checkoutItems: new Map(),
+      checkoutItemCount: 0,
+      totalPrice: 0.00,
+    };
   }
 
   componentDidMount() {
@@ -101,6 +106,112 @@ class Details extends Component {
     xhrMovie.setRequestHeader("Cache-Control", "no-cache");
     xhrMovie.send(dataRestaurant);
   }
+
+  addItemHandler = (item) => {
+    
+    console.log("add item clicked");
+    let checkoutItems = this.state.checkoutItems;
+    let checkoutItemCount = this.state.checkoutItemCount;
+    let totalPrice = this.state.totalPrice + item.price;
+
+    let hasItem = checkoutItems.has(item.item_name);
+    if (hasItem === true) {
+      let itemValue = checkoutItems.get(item.item_name);
+      itemValue["count"] += 1;
+      checkoutItems.set(item.item_name, itemValue);
+    } else {
+      let itemValue = { itemtype: item.item_type, price: item.price, count: 1 };
+      checkoutItems.set(item.item_name, itemValue);
+    }
+    this.setState({ checkoutItems: checkoutItems });
+    this.setState({checkoutItemCount:checkoutItemCount+1});
+    this.setState({totalPrice:totalPrice });
+    console.log(this.state.checkoutItems);
+  };
+
+  removeItemHandler = (e) => {
+    console.log("remove item clicked");
+  };
+
+  generatecheckedOutItemList = () => {
+    let itemList = [];
+    this.state.checkoutItems.forEach((itemvalue, item) => {
+      let listItem = (
+        <ListItem key={item}>
+          <ListItemIcon>
+            <Icon
+              className="fa fa-stop-circle-o"
+              style={{
+                color: itemvalue.itemtype === "VEG" ? "green" : "red",
+                fontSize: "1.1rem",
+              }}
+            />
+          </ListItemIcon>
+          <ListItemText
+            /*primary={item.item_name
+            .split(" ")
+            .map((word) => {
+              return (
+                word.substr(0, 1).toUpperCase() +
+                word.substr(1)
+              );
+            })
+            .join(" ")}*/
+            primary={
+              <div style={{ width: "70%", textAlign: "center" }}>
+                <span>{item}</span>
+                <span style={{ width: "10%", marginLeft: "18%" }}>
+                  <IconButton
+                    style={{ color: "black" }}
+                    edge="start"
+                    aria-label="decrementitem"
+                  >
+                    <RemoveIcon />
+                  </IconButton>
+                  {" " + itemvalue.count + " "}
+                </span>
+                <IconButton
+                  style={{ color: "black" }}
+                  edge="end"
+                  aria-label="incrementitem"
+                >
+                  <AddIcon />
+                </IconButton>
+              </div>
+            }
+          />
+          <ListItemSecondaryAction>
+            {/*<span style={{color:"black"}}>
+          <IconButton style={{color:"black"}} edge="start" aria-label="decrementitem">
+            <RemoveIcon/>
+          </IconButton> 
+          {" 2"}
+          <IconButton style={{color:"black"}} edge="end" aria-label="incrementitem">
+            <AddIcon />
+          </IconButton>
+        </span>*/}
+            <span
+              style={{
+                marginLeft: "1em",
+                fontSize: "1.1rem",
+              }}
+            >
+              <Icon
+                className="fa fa-inr"
+                style={{
+                  marginBottom: "-2px",
+                  fontSize: "1rem",
+                }}
+              />
+              {Number(itemvalue.price * itemvalue.count).toFixed(2)}
+            </span>
+          </ListItemSecondaryAction>
+        </ListItem>
+      );
+      itemList.push(listItem);
+    });
+    return itemList;
+  };
 
   render() {
     const { classes } = this.props;
@@ -256,7 +367,11 @@ class Details extends Component {
                               .join(" ")}
                           />
                           <ListItemSecondaryAction>
-                            <IconButton edge="end" aria-label="additem">
+                            <IconButton
+                              edge="end"
+                              aria-label="additem"
+                              onClick={() => this.addItemHandler(item)}
+                            >
                               <span
                                 style={{
                                   marginRight: "3em",
@@ -271,7 +386,7 @@ class Details extends Component {
                                     fontSize: "1rem",
                                   }}
                                 />
-                                {(Number(item.price)).toFixed(2)}
+                                {Number(item.price).toFixed(2)}
                               </span>
                               <AddIcon />
                             </IconButton>
@@ -283,11 +398,18 @@ class Details extends Component {
                 </List>
               </Box>
             </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={5} style={{marginTop:"24px"}}>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={5}
+              style={{ marginTop: "24px" }}
+            >
               <Card>
                 <CardHeader
                   avatar={
-                    <Badge color="primary" badgeContent={0} showZero>
+                    <Badge color="primary" badgeContent={this.state.checkoutItemCount} showZero>
                       <ShoppingCartIcon />
                     </Badge>
                   }
@@ -300,76 +422,7 @@ class Details extends Component {
                     component="div"
                   >
                     <List>
-                      <ListItem>
-                        <ListItemIcon>
-                          <Icon
-                            className="fa fa-stop-circle-o"
-                            style={{
-                              color: "green",
-                              fontSize: "1.1rem",
-                            }}
-                          />
-                        </ListItemIcon>
-                        <ListItemText
-                          /*primary={item.item_name
-                              .split(" ")
-                              .map((word) => {
-                                return (
-                                  word.substr(0, 1).toUpperCase() +
-                                  word.substr(1)
-                                );
-                              })
-                              .join(" ")}*/
-                          primary={
-                            <div style={{ width: "70%",textAlign:"center" }}>
-                              <span>Chicken Burger</span>
-                              <span style={{ width: "10%", marginLeft: "18%" }}>
-                                <IconButton
-                                  style={{ color: "black" }}
-                                  edge="start"
-                                  aria-label="decrementitem"
-                                >
-                                  <RemoveIcon />
-                                </IconButton>
-                                {" 2"}</span>
-                                <IconButton
-                                  style={{ color: "black" }}
-                                  edge="end"
-                                  aria-label="incrementitem"
-                                >
-                                  <AddIcon />
-                                </IconButton>
-                        
-                            </div>
-                          }
-                        />
-                        <ListItemSecondaryAction>
-                          {/*<span style={{color:"black"}}>
-                            <IconButton style={{color:"black"}} edge="start" aria-label="decrementitem">
-                              <RemoveIcon/>
-                            </IconButton> 
-                            {" 2"}
-                            <IconButton style={{color:"black"}} edge="end" aria-label="incrementitem">
-                              <AddIcon />
-                            </IconButton>
-                          </span>*/}
-                          <span
-                            style={{
-                              marginLeft: "1em",
-                              fontSize: "1.1rem",
-                            }}
-                          >
-                            <Icon
-                              className="fa fa-inr"
-                              style={{
-                                marginBottom: "-2px",
-                                fontSize: "1rem",
-                              }}
-                            />
-                            300.00
-                          </span>
-                        </ListItemSecondaryAction>
-                      </ListItem>
+                      {this.generatecheckedOutItemList()}
                       <ListItem>
                         <ListItemText
                           primary={
@@ -393,22 +446,21 @@ class Details extends Component {
                                 fontSize: "1rem",
                               }}
                             />
-                            0.00
+                            {(Number(this.state.totalPrice)).toFixed(2)}
                           </span>
                         </ListItemSecondaryAction>
                       </ListItem>
                       <ListItem>
-                      <Button
-                      variant="contained"
-                      size="large"
-                      color="primary"
-                      style={{ width: "100%" }}
-                    >
-                      CHECKOUT
-                    </Button>
-                    </ListItem>
+                        <Button
+                          variant="contained"
+                          size="large"
+                          color="primary"
+                          style={{ width: "100%" }}
+                        >
+                          CHECKOUT
+                        </Button>
+                      </ListItem>
                     </List>
-                    
                   </Typography>
                 </CardContent>
               </Card>
