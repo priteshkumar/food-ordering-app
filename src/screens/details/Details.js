@@ -271,7 +271,7 @@ class Details extends Component {
                                     fontSize: "1rem",
                                   }}
                                 />
-                                {item.price}
+                                {(Number(item.price)).toFixed(2)}
                               </span>
                               <AddIcon />
                             </IconButton>
