@@ -3,6 +3,12 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Icon from "@material-ui/core/Icon";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import Badge from "@material-ui/core/Badge";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -10,6 +16,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
 import Divider from "@material-ui/core/Divider";
 import Box from "@material-ui/core/Box";
 //import ButtonBase from "@material-ui/core/ButtonBase";
@@ -54,11 +61,11 @@ const styles = (theme) => ({
   restaurantName: {
     [theme.breakpoints.down("sm")]: {
       fontSize: "2.3rem",
-      paddingBottom:"0px"
+      paddingBottom: "0px",
     },
     [theme.breakpoints.up("sm")]: {
       fontSize: "3rem",
-      paddingBottom:"5px"
+      paddingBottom: "5px",
     },
   },
   restaurantLocality: {
@@ -137,17 +144,21 @@ class Details extends Component {
                   <Typography variant="h3" className={classes.restaurantName}>
                     {restaurant.restaurant_name}
                   </Typography>
-                  </Grid>
-                  <Grid item xs>
-                  <Typography variant="h5" gutterBottom className={classes.restaurantLocality}>
+                </Grid>
+                <Grid item xs>
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    className={classes.restaurantLocality}
+                  >
                     {restaurant.address.locality.toUpperCase()}
                   </Typography>
-                  </Grid>
-                  <Grid item xs={10} sm={12}>
+                </Grid>
+                <Grid item xs={10} sm={12}>
                   <Typography
                     variant="h6"
                     color="textPrimary"
-                    style={{ fontWeight: "400"}}
+                    style={{ fontWeight: "400" }}
                     gutterBottom
                   >
                     {restaurant.categories
@@ -156,7 +167,7 @@ class Details extends Component {
                       })
                       .join(", ")}
                   </Typography>
-                  </Grid>
+                </Grid>
                 <br />
                 <Grid item container direction="row" justify="space-between">
                   <Grid item xs>
@@ -211,7 +222,7 @@ class Details extends Component {
           </div>
         )}
         {this.state.restaurant !== null && (
-          <Grid container spacing={2} justify="flex-start">
+          <Grid container spacing={2} justify="space-around">
             <Grid item xs={12} md={6}>
               <Box mt={3}>
                 <List dense={false} subheader={<li />}>
@@ -229,7 +240,7 @@ class Details extends Component {
                               style={{
                                 color:
                                   item.item_type === "VEG" ? "green" : "red",
-                                  fontSize:"1.1rem"
+                                fontSize: "1.1rem",
                               }}
                             />
                           </ListItemIcon>
@@ -271,6 +282,136 @@ class Details extends Component {
                   ))}
                 </List>
               </Box>
+            </Grid>
+            <Grid item xs={12} sm={12} md={6} lg={5} style={{marginTop:"24px"}}>
+              <Card>
+                <CardHeader
+                  avatar={
+                    <Badge color="primary" badgeContent={0} showZero>
+                      <ShoppingCartIcon />
+                    </Badge>
+                  }
+                  title={<Typography variant="h6">My Cart</Typography>}
+                />
+                <CardContent>
+                  <Typography
+                    variant="body1"
+                    color="textSecondary"
+                    component="div"
+                  >
+                    <List>
+                      <ListItem>
+                        <ListItemIcon>
+                          <Icon
+                            className="fa fa-stop-circle-o"
+                            style={{
+                              color: "green",
+                              fontSize: "1.1rem",
+                            }}
+                          />
+                        </ListItemIcon>
+                        <ListItemText
+                          /*primary={item.item_name
+                              .split(" ")
+                              .map((word) => {
+                                return (
+                                  word.substr(0, 1).toUpperCase() +
+                                  word.substr(1)
+                                );
+                              })
+                              .join(" ")}*/
+                          primary={
+                            <div style={{ width: "70%",textAlign:"center" }}>
+                              <span>Chicken Burger</span>
+                              <span style={{ width: "10%", marginLeft: "18%" }}>
+                                <IconButton
+                                  style={{ color: "black" }}
+                                  edge="start"
+                                  aria-label="decrementitem"
+                                >
+                                  <RemoveIcon />
+                                </IconButton>
+                                {" 2"}</span>
+                                <IconButton
+                                  style={{ color: "black" }}
+                                  edge="end"
+                                  aria-label="incrementitem"
+                                >
+                                  <AddIcon />
+                                </IconButton>
+                        
+                            </div>
+                          }
+                        />
+                        <ListItemSecondaryAction>
+                          {/*<span style={{color:"black"}}>
+                            <IconButton style={{color:"black"}} edge="start" aria-label="decrementitem">
+                              <RemoveIcon/>
+                            </IconButton> 
+                            {" 2"}
+                            <IconButton style={{color:"black"}} edge="end" aria-label="incrementitem">
+                              <AddIcon />
+                            </IconButton>
+                          </span>*/}
+                          <span
+                            style={{
+                              marginLeft: "1em",
+                              fontSize: "1.1rem",
+                            }}
+                          >
+                            <Icon
+                              className="fa fa-inr"
+                              style={{
+                                marginBottom: "-2px",
+                                fontSize: "1rem",
+                              }}
+                            />
+                            300.00
+                          </span>
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText
+                          primary={
+                            <Typography variant="h6" style={{ color: "black" }}>
+                              TOTAL AMOUNT
+                            </Typography>
+                          }
+                        />
+                        <ListItemSecondaryAction>
+                          <span
+                            style={{
+                              marginRight: "1em",
+                              fontSize: "1.1rem",
+                              color: "black",
+                            }}
+                          >
+                            <Icon
+                              className="fa fa-inr"
+                              style={{
+                                marginBottom: "-2px",
+                                fontSize: "1rem",
+                              }}
+                            />
+                            0.00
+                          </span>
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                      <ListItem>
+                      <Button
+                      variant="contained"
+                      size="large"
+                      color="primary"
+                      style={{ width: "100%" }}
+                    >
+                      CHECKOUT
+                    </Button>
+                    </ListItem>
+                    </List>
+                    
+                  </Typography>
+                </CardContent>
+              </Card>
             </Grid>
           </Grid>
         )}
