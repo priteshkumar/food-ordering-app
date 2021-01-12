@@ -227,13 +227,13 @@ class Details extends Component {
               <Box mt={3}>
                 <List dense={false} subheader={<li />}>
                   {restaurant.categories.map((category) => (
-                    <>
+                    <React.Fragment key={"category" + category.id}>
                       <ListSubheader disableSticky={true}>
                         {category.category_name.toUpperCase()}
                       </ListSubheader>
                       <Divider />
                       {category.item_list.map((item) => (
-                        <ListItem>
+                        <ListItem key={"item" + item.id}>
                           <ListItemIcon>
                             <Icon
                               className="fa fa-circle"
@@ -278,7 +278,7 @@ class Details extends Component {
                           </ListItemSecondaryAction>
                         </ListItem>
                       ))}
-                    </>
+                    </React.Fragment>
                   ))}
                 </List>
               </Box>
