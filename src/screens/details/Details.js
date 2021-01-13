@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Icon from "@material-ui/core/Icon";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+//import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -14,6 +14,11 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+//import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
@@ -82,7 +87,7 @@ class Details extends Component {
       restaurant: null,
       checkoutItems: new Map(),
       checkoutItemCount: 0,
-      totalPrice: 0.00,
+      totalPrice: 0.0,
     };
   }
 
@@ -108,7 +113,6 @@ class Details extends Component {
   }
 
   addItemHandler = (item) => {
-    
     console.log("add item clicked");
     let checkoutItems = this.state.checkoutItems;
     let checkoutItemCount = this.state.checkoutItemCount;
@@ -124,8 +128,8 @@ class Details extends Component {
       checkoutItems.set(item.item_name, itemValue);
     }
     this.setState({ checkoutItems: checkoutItems });
-    this.setState({checkoutItemCount:checkoutItemCount+1});
-    this.setState({totalPrice:totalPrice });
+    this.setState({ checkoutItemCount: checkoutItemCount + 1 });
+    this.setState({ totalPrice: totalPrice });
     console.log(this.state.checkoutItems);
   };
 
@@ -137,63 +141,50 @@ class Details extends Component {
     let itemList = [];
     this.state.checkoutItems.forEach((itemvalue, item) => {
       let listItem = (
-        <ListItem key={item}>
-          <ListItemIcon>
+        <TableRow key={item}>
+          <TableCell style={{ textAlign: "right" }}>
             <Icon
               className="fa fa-stop-circle-o"
               style={{
                 color: itemvalue.itemtype === "VEG" ? "green" : "red",
-                fontSize: "1.1rem",
+                fontSize: "1rem",
               }}
             />
-          </ListItemIcon>
-          <ListItemText
-            /*primary={item.item_name
-            .split(" ")
-            .map((word) => {
-              return (
-                word.substr(0, 1).toUpperCase() +
-                word.substr(1)
-              );
-            })
-            .join(" ")}*/
-            primary={
-              <div style={{ width: "70%", textAlign: "center" }}>
-                <span>{item}</span>
-                <span style={{ width: "10%", marginLeft: "18%" }}>
-                  <IconButton
-                    style={{ color: "black" }}
-                    edge="start"
-                    aria-label="decrementitem"
-                  >
-                    <RemoveIcon />
-                  </IconButton>
-                  {" " + itemvalue.count + " "}
-                </span>
-                <IconButton
-                  style={{ color: "black" }}
-                  edge="end"
-                  aria-label="incrementitem"
-                >
-                  <AddIcon />
-                </IconButton>
-              </div>
-            }
-          />
-          <ListItemSecondaryAction>
-            {/*<span style={{color:"black"}}>
-          <IconButton style={{color:"black"}} edge="start" aria-label="decrementitem">
-            <RemoveIcon/>
-          </IconButton> 
-          {" 2"}
-          <IconButton style={{color:"black"}} edge="end" aria-label="incrementitem">
-            <AddIcon />
-          </IconButton>
-        </span>*/}
+          </TableCell>
+          <TableCell>
+            <span style={{ textAlign: "left" }}>{item}</span>
+          </TableCell>
+
+          <TableCell align="center">
+            <IconButton
+              style={{
+                color: "black",
+                paddingTop: "0px",
+                paddingBottom: "0px",
+                fontSize: "1.1rem",
+              }}
+              edge="start"
+              aria-label="decrementitem"
+            >
+              <RemoveIcon style={{ paddingRight: "2px" }} />
+              <span>{itemvalue.count}</span>
+            </IconButton>
+            <IconButton
+              style={{
+                color: "black",
+                paddingTop: "0px",
+                paddingBottom: "0px",
+              }}
+              edge="start"
+              aria-label="incrementitem"
+            >
+              <AddIcon />
+            </IconButton>
+          </TableCell>
+          <TableCell align="left">
             <span
               style={{
-                marginLeft: "1em",
-                fontSize: "1.1rem",
+                fontSize: "0.9rem",
               }}
             >
               <Icon
@@ -205,8 +196,8 @@ class Details extends Component {
               />
               {Number(itemvalue.price * itemvalue.count).toFixed(2)}
             </span>
-          </ListItemSecondaryAction>
-        </ListItem>
+          </TableCell>
+        </TableRow>
       );
       itemList.push(listItem);
     });
@@ -409,7 +400,11 @@ class Details extends Component {
               <Card>
                 <CardHeader
                   avatar={
-                    <Badge color="primary" badgeContent={this.state.checkoutItemCount} showZero>
+                    <Badge
+                      color="primary"
+                      badgeContent={this.state.checkoutItemCount}
+                      showZero
+                    >
                       <ShoppingCartIcon />
                     </Badge>
                   }
@@ -421,9 +416,27 @@ class Details extends Component {
                     color="textSecondary"
                     component="div"
                   >
-                    <List>
-                      {this.generatecheckedOutItemList()}
-                      <ListItem>
+                    <Table
+                      aria-label="caption table"
+                      style={{ width:"100%"}}
+                    >
+                      <TableBody>{this.generatecheckedOutItemList()}</TableBody>
+                    </Table>
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        )}
+      </div>
+    );
+  }
+}
+
+export default withStyles(styles)(Details);
+
+/*
+<ListItem>
                         <ListItemText
                           primary={
                             <Typography variant="h6" style={{ color: "black" }}>
@@ -461,15 +474,6 @@ class Details extends Component {
                         </Button>
                       </ListItem>
                     </List>
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        )}
-      </div>
-    );
-  }
-}
 
-export default withStyles(styles)(Details);
+                            */
+

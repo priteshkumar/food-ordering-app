@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Controller from './screens/Controller';
 import 'typeface-roboto';
+//import ListTest from './common/ListTest';
+//import TableTest from './common/TableTest';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
