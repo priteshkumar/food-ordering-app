@@ -24,6 +24,7 @@ import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import Divider from "@material-ui/core/Divider";
 import Box from "@material-ui/core/Box";
+import Snackbar from "@material-ui/core/Snackbar";
 //import ButtonBase from "@material-ui/core/ButtonBase";
 import "font-awesome/css/font-awesome.css";
 import Header from "../../common/header/Header";
@@ -88,6 +89,9 @@ class Details extends Component {
       checkoutItems: new Map(),
       checkoutItemCount: 0,
       totalPrice: 0.0,
+      itemsAdded:false,
+      itemsIncreased:false,
+      itemsRemoved:false,
     };
   }
 
@@ -112,7 +116,7 @@ class Details extends Component {
     xhrMovie.send(dataRestaurant);
   }
 
-  addItemHandler = (item) => {
+  addItemHandler = (item,itemAdded) => {
     console.log("add item clicked");
     let checkoutItems = this.state.checkoutItems;
     let checkoutItemCount = this.state.checkoutItemCount;
@@ -136,7 +140,9 @@ class Details extends Component {
     this.setState({ checkoutItems: checkoutItems });
     this.setState({ checkoutItemCount: checkoutItemCount + 1 });
     this.setState({ totalPrice: totalPrice });
-    console.log(this.state.checkoutItems);
+
+    itemAdded === true ? this.setState({itemsAdded:true}):this.setState({itemsIncreased:true});
+    //console.log(this.state.checkoutItems);
   };
 
   removeItemHandler = (e) => {
@@ -184,7 +190,7 @@ class Details extends Component {
               }}
               edge="start"
               aria-label="incrementitem"
-              onClick={() => this.addItemHandler(itemvalue)}
+              onClick={() => this.addItemHandler(itemvalue,false)}
             >
               <AddIcon />
             </IconButton>
@@ -240,10 +246,18 @@ class Details extends Component {
     return itemList;
   };
 
+  handlesnackBarClose = (e) => {
+    this.setState({ itemsAdded: false });
+    this.setState({ itemsIncreased: false });
+    this.setState({itemsRemoved:false});
+  };
+
   render() {
     const { classes } = this.props;
     const priceMsg = "AVERAGE COST FOR\n TWO PEOPLE";
     const restaurant = this.state.restaurant;
+    let vertical = "bottom";
+    let horizontal = "left";
 
     return (
       <div className={classes.root}>
@@ -397,7 +411,7 @@ class Details extends Component {
                             <IconButton
                               edge="end"
                               aria-label="additem"
-                              onClick={() => this.addItemHandler(item)}
+                              onClick={() => this.addItemHandler(item,true)}
                             >
                               <span
                                 style={{
@@ -493,6 +507,26 @@ class Details extends Component {
                 </CardContent>
               </Card>
             </Grid>
+            <Snackbar
+              anchorOrigin={{ vertical, horizontal }}
+              open={
+                this.state.itemsAdded ||
+                this.state.itemsRemoved ||
+                this.state.itemsIncreased
+              }
+              onClose={this.handlesnackBarClose}
+              autoHideDuration={1000}
+              message={
+                this.state.itemsAdded === true
+                  ? "Item added to cart!"
+                  : this.state.itemsIncreased === true
+                    ? "Item quantity increased by 1!"
+                    : this.state.itemsRemoved === true
+                      ? "Item removed from cart!"
+                      : ""
+              }
+              key={vertical + horizontal}
+            />
           </Grid>
         )}
       </div>
