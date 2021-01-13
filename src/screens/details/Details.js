@@ -89,9 +89,9 @@ class Details extends Component {
       checkoutItems: new Map(),
       checkoutItemCount: 0,
       totalPrice: 0.0,
-      itemsAdded:false,
-      itemsIncreased:false,
-      itemsRemoved:false,
+      itemsAdded: false,
+      itemsIncreased: false,
+      itemsRemoved: false,
     };
   }
 
@@ -116,7 +116,7 @@ class Details extends Component {
     xhrMovie.send(dataRestaurant);
   }
 
-  addItemHandler = (item,itemAdded) => {
+  addItemHandler = (item, itemAdded) => {
     console.log("add item clicked");
     let checkoutItems = this.state.checkoutItems;
     let checkoutItemCount = this.state.checkoutItemCount;
@@ -141,12 +141,31 @@ class Details extends Component {
     this.setState({ checkoutItemCount: checkoutItemCount + 1 });
     this.setState({ totalPrice: totalPrice });
 
-    itemAdded === true ? this.setState({itemsAdded:true}):this.setState({itemsIncreased:true});
+    itemAdded === true
+      ? this.setState({ itemsAdded: true })
+      : this.setState({ itemsIncreased: true });
     //console.log(this.state.checkoutItems);
   };
 
-  removeItemHandler = (e) => {
+  removeItemHandler = (item) => {
+
     console.log("remove item clicked");
+    let checkoutItems = this.state.checkoutItems;
+    let checkoutItemCount = this.state.checkoutItemCount -1;
+    let totalPrice = this.state.totalPrice - item.price;
+    let itemValue = checkoutItems.get(item.id);
+    if(itemValue["count"] === 1){
+      checkoutItems.delete(item.id);
+    }
+    else{
+      itemValue["count"] -= 1;
+      checkoutItems.set(item.id,itemValue);
+    }
+    this.setState({checkoutItems:checkoutItems});
+    this.setState({checkoutItemCount:checkoutItemCount});
+    this.setState({totalPrice:totalPrice});
+    this.setState({itemsRemoved:true});
+
   };
 
   generatecheckedOutItemList = () => {
@@ -190,7 +209,7 @@ class Details extends Component {
               }}
               edge="start"
               aria-label="incrementitem"
-              onClick={() => this.addItemHandler(itemvalue,false)}
+              onClick={() => this.addItemHandler(itemvalue, false)}
             >
               <AddIcon />
             </IconButton>
@@ -249,7 +268,7 @@ class Details extends Component {
   handlesnackBarClose = (e) => {
     this.setState({ itemsAdded: false });
     this.setState({ itemsIncreased: false });
-    this.setState({itemsRemoved:false});
+    this.setState({ itemsRemoved: false });
   };
 
   render() {
@@ -411,7 +430,7 @@ class Details extends Component {
                             <IconButton
                               edge="end"
                               aria-label="additem"
-                              onClick={() => this.addItemHandler(item,true)}
+                              onClick={() => this.addItemHandler(item, true)}
                             >
                               <span
                                 style={{
