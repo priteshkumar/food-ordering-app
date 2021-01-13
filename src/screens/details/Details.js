@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Icon from "@material-ui/core/Icon";
 import Typography from "@material-ui/core/Typography";
-//import Button from "@material-ui/core/Button";
+import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -201,6 +201,34 @@ class Details extends Component {
       );
       itemList.push(listItem);
     });
+
+    // eslint-disable-next-line no-unused-vars
+    let totalAmountRow = (
+      <TableRow>
+        <TableCell colSpan={1} align="right">
+          TOTAL AMOUNT
+        </TableCell>
+        <TableCell colspan={3} align="right">
+          <span
+            style={{
+              marginRight: "1em",
+              fontSize: "1.1rem",
+              color: "black",
+            }}
+          >
+            <Icon
+              className="fa fa-inr"
+              style={{
+                marginBottom: "-2px",
+                fontSize: "1rem",
+              }}
+            />
+            {Number(this.state.totalPrice).toFixed(2)}
+          </span>
+        </TableCell>
+      </TableRow>
+    );
+    //itemList.push(totalAmountRow);
     return itemList;
   };
 
@@ -416,12 +444,35 @@ class Details extends Component {
                     color="textSecondary"
                     component="div"
                   >
-                    <Table
-                      aria-label="caption table"
-                      style={{ width:"100%"}}
-                    >
+                    <Table aria-label="caption table" style={{ width: "100%" }}>
                       <TableBody>{this.generatecheckedOutItemList()}</TableBody>
                     </Table>
+                    <Typography component="div" style={{width:"98%",display:"flex",justifyContent:"space-between",alignItems:"baseline"}}>
+                      <h4>TOTAL AMOUNT</h4>
+                    <span
+                      style={{
+                        marginRight: "2.5em",
+                        fontSize: "1rem",
+                        color: "black",
+                      }}
+                    >
+                      <Icon
+                        className="fa fa-inr"
+                        style={{
+                          fontSize: "1rem",
+                        }}
+                      />
+                      {Number(this.state.totalPrice).toFixed(2)}
+                    </span>
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      color="primary"
+                      style={{ width: "100%" }}
+                    >
+                      CHECKOUT
+                    </Button>
                   </Typography>
                 </CardContent>
               </Card>
@@ -476,4 +527,3 @@ export default withStyles(styles)(Details);
                     </List>
 
                             */
-
