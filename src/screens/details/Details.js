@@ -118,14 +118,20 @@ class Details extends Component {
     let checkoutItemCount = this.state.checkoutItemCount;
     let totalPrice = this.state.totalPrice + item.price;
 
-    let hasItem = checkoutItems.has(item.item_name);
+    let hasItem = checkoutItems.has(item.id);
     if (hasItem === true) {
-      let itemValue = checkoutItems.get(item.item_name);
+      let itemValue = checkoutItems.get(item.id);
       itemValue["count"] += 1;
-      checkoutItems.set(item.item_name, itemValue);
+      checkoutItems.set(item.id, itemValue);
     } else {
-      let itemValue = { itemtype: item.item_type, price: item.price, count: 1 };
-      checkoutItems.set(item.item_name, itemValue);
+      let itemValue = {
+        id: item.id,
+        item_name: item.item_name,
+        itemtype: item.item_type,
+        price: item.price,
+        count: 1,
+      };
+      checkoutItems.set(item.id, itemValue);
     }
     this.setState({ checkoutItems: checkoutItems });
     this.setState({ checkoutItemCount: checkoutItemCount + 1 });
@@ -139,9 +145,9 @@ class Details extends Component {
 
   generatecheckedOutItemList = () => {
     let itemList = [];
-    this.state.checkoutItems.forEach((itemvalue, item) => {
+    this.state.checkoutItems.forEach((itemvalue, id) => {
       let listItem = (
-        <TableRow key={item}>
+        <TableRow key={"row" + id}>
           <TableCell style={{ textAlign: "right" }}>
             <Icon
               className="fa fa-stop-circle-o"
@@ -152,7 +158,7 @@ class Details extends Component {
             />
           </TableCell>
           <TableCell>
-            <span style={{ textAlign: "left" }}>{item}</span>
+            <span style={{ textAlign: "left" }}>{itemvalue.item_name}</span>
           </TableCell>
 
           <TableCell align="center">
@@ -165,6 +171,7 @@ class Details extends Component {
               }}
               edge="start"
               aria-label="decrementitem"
+              onClick={() => this.removeItemHandler(itemvalue)}
             >
               <RemoveIcon style={{ paddingRight: "2px" }} />
               <span>{itemvalue.count}</span>
@@ -177,6 +184,7 @@ class Details extends Component {
               }}
               edge="start"
               aria-label="incrementitem"
+              onClick={() => this.addItemHandler(itemvalue)}
             >
               <AddIcon />
             </IconButton>
@@ -447,23 +455,31 @@ class Details extends Component {
                     <Table aria-label="caption table" style={{ width: "100%" }}>
                       <TableBody>{this.generatecheckedOutItemList()}</TableBody>
                     </Table>
-                    <Typography component="div" style={{width:"98%",display:"flex",justifyContent:"space-between",alignItems:"baseline"}}>
-                      <h4>TOTAL AMOUNT</h4>
-                    <span
+                    <Typography
+                      component="div"
                       style={{
-                        marginRight: "2.5em",
-                        fontSize: "1rem",
-                        color: "black",
+                        width: "98%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "baseline",
                       }}
                     >
-                      <Icon
-                        className="fa fa-inr"
+                      <h4>TOTAL AMOUNT</h4>
+                      <span
                         style={{
+                          marginRight: "2.5em",
                           fontSize: "1rem",
+                          color: "black",
                         }}
-                      />
-                      {Number(this.state.totalPrice).toFixed(2)}
-                    </span>
+                      >
+                        <Icon
+                          className="fa fa-inr"
+                          style={{
+                            fontSize: "1rem",
+                          }}
+                        />
+                        {Number(this.state.totalPrice).toFixed(2)}
+                      </span>
                     </Typography>
                     <Button
                       variant="contained"
