@@ -93,6 +93,9 @@ class Details extends Component {
       itemsIncreased: false,
       itemsRemoved: false,
       emptyCheckout: false,
+      loggedIn: false,
+      customerId: null,
+      loggedOutcheckOut: false,
     };
   }
 
@@ -272,6 +275,8 @@ class Details extends Component {
       this.setState({ itemsRemoved: false });
     } else if (this.state.emptyCheckout === true) {
       this.setState({ emptyCheckout: false });
+    } else if (this.state.loggedOutcheckOut === true) {
+      this.setState({ loggedOutcheckOut: false });
     }
   };
 
@@ -280,11 +285,24 @@ class Details extends Component {
   };
 
   checkoutHandler = (e) => {
-    console.log("checkout clicked");
     if (this.state.checkoutItemCount === 0) {
-      console.log("0 item count");
       this.setState({ emptyCheckout: true });
+    } else if (
+      this.state.loggedIn === false &&
+      this.state.checkoutItemCount > 0
+    ) {
+      this.setState({ loggedOutcheckOut: true });
     }
+  };
+
+  loginNotifier = (customerId) => {
+    this.setState({ loggedIn: true });
+    this.setState({ customerId: customerId });
+  };
+
+  logoutNotifer = (customerId) => {
+    this.setState({ loggedIn: false });
+    this.setState({ customerId: null });
   };
 
   render() {
@@ -300,6 +318,7 @@ class Details extends Component {
           baseUrl={this.props.baseUrl}
           showSearchBox="false"
           profileHandler={this.profileHandler}
+          loginNotifier={this.loginNotifier}
         />
         {this.state.restaurant !== null && (
           <div className={classes.paper}>
@@ -552,7 +571,9 @@ class Details extends Component {
               open={
                 this.state.itemsAdded ||
                 this.state.itemsRemoved ||
-                this.state.itemsIncreased || this.state.emptyCheckout
+                this.state.itemsIncreased ||
+                this.state.emptyCheckout ||
+                this.state.loggedOutcheckOut
               }
               onClose={this.handlesnackBarClose}
               autoHideDuration={1000}
@@ -563,7 +584,11 @@ class Details extends Component {
                     ? "Item quantity increased by 1!"
                     : this.state.itemsRemoved === true
                       ? "Item removed from cart!"
-                      : this.state.emptyCheckout === true?"Please add an item to your cart!":"" 
+                      : this.state.emptyCheckout === true
+                        ? "Please add an item to your cart!"
+                        : this.state.loggedOutcheckOut === true
+                          ? "Please login first!"
+                          : ""
               }
               key={vertical + horizontal}
             />
