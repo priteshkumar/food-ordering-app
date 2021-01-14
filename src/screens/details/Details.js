@@ -148,24 +148,21 @@ class Details extends Component {
   };
 
   removeItemHandler = (item) => {
-
     console.log("remove item clicked");
     let checkoutItems = this.state.checkoutItems;
-    let checkoutItemCount = this.state.checkoutItemCount -1;
+    let checkoutItemCount = this.state.checkoutItemCount - 1;
     let totalPrice = this.state.totalPrice - item.price;
     let itemValue = checkoutItems.get(item.id);
-    if(itemValue["count"] === 1){
+    if (itemValue["count"] === 1) {
       checkoutItems.delete(item.id);
-    }
-    else{
+    } else {
       itemValue["count"] -= 1;
-      checkoutItems.set(item.id,itemValue);
+      checkoutItems.set(item.id, itemValue);
     }
-    this.setState({checkoutItems:checkoutItems});
-    this.setState({checkoutItemCount:checkoutItemCount});
-    this.setState({totalPrice:totalPrice});
-    this.setState({itemsRemoved:true});
-
+    this.setState({ checkoutItems: checkoutItems });
+    this.setState({ checkoutItemCount: checkoutItemCount });
+    this.setState({ totalPrice: totalPrice });
+    this.setState({ itemsRemoved: true });
   };
 
   generatecheckedOutItemList = () => {
@@ -271,6 +268,10 @@ class Details extends Component {
     this.setState({ itemsRemoved: false });
   };
 
+  profileHandler = (e) => {
+    this.props.history.push("/profile");
+  }
+
   render() {
     const { classes } = this.props;
     const priceMsg = "AVERAGE COST FOR\n TWO PEOPLE";
@@ -280,7 +281,7 @@ class Details extends Component {
 
     return (
       <div className={classes.root}>
-        <Header baseUrl={this.baseUrl} showSearchBox="false" />
+        <Header baseUrl={this.props.baseUrl} showSearchBox="false" profileHandler={this.profileHandler}/>
         {this.state.restaurant !== null && (
           <div className={classes.paper}>
             <Grid
@@ -340,7 +341,7 @@ class Details extends Component {
                   </Typography>
                 </Grid>
                 <br />
-                <Grid item container direction="row" justify="space-between">
+                <Grid item container direction="row" justify="space-between" alignItems="baseline">
                   <Grid item xs>
                     <Typography variant="subtitle1">
                       <span style={{ fontSize: "1.4rem" }}>
@@ -370,7 +371,7 @@ class Details extends Component {
                       <span style={{ fontSize: "1.4rem" }}>
                         <Icon
                           className="fa fa-inr"
-                          style={{ marginBottom: "-3px" }}
+                          style={{ marginBottom: "-5px" }}
                         />
                         {restaurant.average_price}
                       </span>
@@ -480,11 +481,6 @@ class Details extends Component {
                   title={<Typography variant="h6">My Cart</Typography>}
                 />
                 <CardContent>
-                  <Typography
-                    variant="body1"
-                    color="textSecondary"
-                    component="div"
-                  >
                     <Table aria-label="caption table" style={{ width: "100%" }}>
                       <TableBody>{this.generatecheckedOutItemList()}</TableBody>
                     </Table>
@@ -522,7 +518,6 @@ class Details extends Component {
                     >
                       CHECKOUT
                     </Button>
-                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
