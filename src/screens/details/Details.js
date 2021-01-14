@@ -270,7 +270,7 @@ class Details extends Component {
 
   profileHandler = (e) => {
     this.props.history.push("/profile");
-  }
+  };
 
   render() {
     const { classes } = this.props;
@@ -281,7 +281,11 @@ class Details extends Component {
 
     return (
       <div className={classes.root}>
-        <Header baseUrl={this.props.baseUrl} showSearchBox="false" profileHandler={this.profileHandler}/>
+        <Header
+          baseUrl={this.props.baseUrl}
+          showSearchBox="false"
+          profileHandler={this.profileHandler}
+        />
         {this.state.restaurant !== null && (
           <div className={classes.paper}>
             <Grid
@@ -341,7 +345,13 @@ class Details extends Component {
                   </Typography>
                 </Grid>
                 <br />
-                <Grid item container direction="row" justify="space-between" alignItems="baseline">
+                <Grid
+                  item
+                  container
+                  direction="row"
+                  justify="space-between"
+                  alignItems="baseline"
+                >
                   <Grid item xs>
                     <Typography variant="subtitle1">
                       <span style={{ fontSize: "1.4rem" }}>
@@ -481,43 +491,43 @@ class Details extends Component {
                   title={<Typography variant="h6">My Cart</Typography>}
                 />
                 <CardContent>
-                    <Table aria-label="caption table" style={{ width: "100%" }}>
-                      <TableBody>{this.generatecheckedOutItemList()}</TableBody>
-                    </Table>
-                    <Typography
-                      component="div"
+                  <Table aria-label="caption table" style={{ width: "100%" }}>
+                    <TableBody>{this.generatecheckedOutItemList()}</TableBody>
+                  </Table>
+                  <Typography
+                    component="div"
+                    style={{
+                      width: "98%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "baseline",
+                    }}
+                  >
+                    <h4>TOTAL AMOUNT</h4>
+                    <span
                       style={{
-                        width: "98%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "baseline",
+                        marginRight: "2.5em",
+                        fontSize: "1rem",
+                        color: "black",
                       }}
                     >
-                      <h4>TOTAL AMOUNT</h4>
-                      <span
+                      <Icon
+                        className="fa fa-inr"
                         style={{
-                          marginRight: "2.5em",
                           fontSize: "1rem",
-                          color: "black",
                         }}
-                      >
-                        <Icon
-                          className="fa fa-inr"
-                          style={{
-                            fontSize: "1rem",
-                          }}
-                        />
-                        {Number(this.state.totalPrice).toFixed(2)}
-                      </span>
-                    </Typography>
-                    <Button
-                      variant="contained"
-                      size="large"
-                      color="primary"
-                      style={{ width: "100%" }}
-                    >
-                      CHECKOUT
-                    </Button>
+                      />
+                      {Number(this.state.totalPrice).toFixed(2)}
+                    </span>
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    size="large"
+                    color="primary"
+                    style={{ width: "100%" }}
+                  >
+                    CHECKOUT
+                  </Button>
                 </CardContent>
               </Card>
             </Grid>
