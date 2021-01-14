@@ -161,6 +161,10 @@ class Header extends Component {
 
         that.setState({ loggedIn: true });
         that.setState({ snackDisp: true });
+        if(that.props.loginNotifier){
+         // console.log("notify loginstate");
+          that.props.loginNotifier();
+        }
         that.closeModalHandler();
       }
       else if(this.readyState === 4 && this.status !== 200){
@@ -343,6 +347,10 @@ class Header extends Component {
         sessionStorage.removeItem("access-token");
         sessionStorage.removeItem("loggedinUser");
         that.setState({ loggedIn: false });
+        if(that.props.logoutNotifier){
+          /*console.log("notify logout"); */
+          that.props.logoutNotifier();
+        }
         console.log("loggedout customer");
       }
     });

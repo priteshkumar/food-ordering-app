@@ -293,14 +293,17 @@ class Details extends Component {
     ) {
       this.setState({ loggedOutcheckOut: true });
     }
+    //todo move to checkout screen
   };
 
-  loginNotifier = (customerId) => {
+  loginNotifier = () => {
+    console.log("login notifier");
     this.setState({ loggedIn: true });
-    this.setState({ customerId: customerId });
+    this.setState({ customerId: sessionStorage.getItem("uuid") });
   };
 
-  logoutNotifer = (customerId) => {
+  logoutNotifier = () => {
+    console.log("logout notifier");
     this.setState({ loggedIn: false });
     this.setState({ customerId: null });
   };
@@ -319,6 +322,7 @@ class Details extends Component {
           showSearchBox="false"
           profileHandler={this.profileHandler}
           loginNotifier={this.loginNotifier}
+          logoutNotifier={this.logoutNotifier}
         />
         {this.state.restaurant !== null && (
           <div className={classes.paper}>
