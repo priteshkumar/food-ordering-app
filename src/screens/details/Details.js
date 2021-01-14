@@ -92,6 +92,7 @@ class Details extends Component {
       itemsAdded: false,
       itemsIncreased: false,
       itemsRemoved: false,
+      emptyCheckout: false,
     };
   }
 
@@ -263,13 +264,27 @@ class Details extends Component {
   };
 
   handlesnackBarClose = (e) => {
-    this.setState({ itemsAdded: false });
-    this.setState({ itemsIncreased: false });
-    this.setState({ itemsRemoved: false });
+    if (this.state.itemsAdded === true) {
+      this.setState({ itemsAdded: false });
+    } else if (this.state.itemsIncreased === true) {
+      this.setState({ itemsIncreased: false });
+    } else if (this.state.itemsRemoved === true) {
+      this.setState({ itemsRemoved: false });
+    } else if (this.state.emptyCheckout === true) {
+      this.setState({ emptyCheckout: false });
+    }
   };
 
   profileHandler = (e) => {
     this.props.history.push("/profile");
+  };
+
+  checkoutHandler = (e) => {
+    console.log("checkout clicked");
+    if (this.state.checkoutItemCount === 0) {
+      console.log("0 item count");
+      this.setState({ emptyCheckout: true });
+    }
   };
 
   render() {
@@ -525,6 +540,7 @@ class Details extends Component {
                     size="large"
                     color="primary"
                     style={{ width: "100%" }}
+                    onClick={this.checkoutHandler}
                   >
                     CHECKOUT
                   </Button>
@@ -536,7 +552,7 @@ class Details extends Component {
               open={
                 this.state.itemsAdded ||
                 this.state.itemsRemoved ||
-                this.state.itemsIncreased
+                this.state.itemsIncreased || this.state.emptyCheckout
               }
               onClose={this.handlesnackBarClose}
               autoHideDuration={1000}
@@ -547,7 +563,7 @@ class Details extends Component {
                     ? "Item quantity increased by 1!"
                     : this.state.itemsRemoved === true
                       ? "Item removed from cart!"
-                      : ""
+                      : this.state.emptyCheckout === true?"Please add an item to your cart!":"" 
               }
               key={vertical + horizontal}
             />
