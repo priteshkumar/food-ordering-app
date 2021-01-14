@@ -79,6 +79,18 @@ const styles = (theme) => ({
       fontSize: "1.3rem",
     },
   },
+  restaurantStats:{
+    whiteSpace: "pre-line",
+    color: "grey",
+    fontWeight: "430",
+    fontSize: "1.1rem",
+    [theme.breakpoints.down("sm")]: {
+      textAlign:"center",
+    },
+    [theme.breakpoints.up("sm")]: {
+      textAlign:"left",
+    },
+  },
 });
 
 class Details extends Component {
@@ -310,7 +322,6 @@ class Details extends Component {
 
   render() {
     const { classes } = this.props;
-    const priceMsg = "AVERAGE COST FOR\n TWO PEOPLE";
     const restaurant = this.state.restaurant;
     let vertical = "bottom";
     let horizontal = "left";
@@ -390,50 +401,34 @@ class Details extends Component {
                   justify="space-between"
                   alignItems="baseline"
                 >
-                  <Grid item xs>
-                    <Typography variant="subtitle1">
-                      <span style={{ fontSize: "1.4rem" }}>
+                  <Grid item xs={5} style={{ marginLeft: "0px" }}>
+                    <Typography component="div" style={{ textAlign: "left" }}>
+                      <p className={classes.restaurantStats}>
                         <Icon
                           className="fa fa-star"
-                          style={{ marginBottom: "-3px" }}
-                        />{" "}
-                        {restaurant.customer_rating}
-                      </span>
-                      <br />
-                      <span
-                        style={{
-                          whiteSpace: "pre-line",
-                          color: "grey",
-                          fontWeight: "430",
-                          fontSize: "1.2rem",
-                        }}
-                      >
-                        {"AVERAGE RATING BY\n" +
+                          style={{ marginBottom: "-3px", color: "black" }}
+                        />
+                        <span style={{ color: "black" }}>
+                          {restaurant.customer_rating}
+                        </span>
+                        {"\nAVERAGE RATING BY\n" +
                           restaurant.number_customers_rated +
                           " CUSTOMERS"}
-                      </span>
+                      </p>
                     </Typography>
                   </Grid>
-                  <Grid item xs>
-                    <Typography variant="subtitle1">
-                      <span style={{ fontSize: "1.4rem" }}>
+                  <Grid item xs={5}>
+                    <Typography component="div" style={{ textAlign: "left" }}>
+                      <p className={classes.restaurantStats}>
                         <Icon
                           className="fa fa-inr"
-                          style={{ marginBottom: "-5px" }}
+                          style={{ marginBottom: "-5px", color: "black" }}
                         />
-                        {restaurant.average_price}
-                      </span>
-                      <br />
-                      <span
-                        style={{
-                          whiteSpace: "pre-line",
-                          color: "grey",
-                          fontWeight: "430",
-                          fontSize: "1.2rem",
-                        }}
-                      >
-                        {priceMsg}
-                      </span>
+                        <span style={{ color: "black" }}>
+                          {restaurant.average_price}
+                        </span>
+                        {"\nAVERAGE COST FOR\n2 PEOPLE"}
+                      </p>
                     </Typography>
                   </Grid>
                 </Grid>
